@@ -1,24 +1,11 @@
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a name="readme-top"></a>
 
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Issues][issues-shield]][issues-url]
-
-
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/Carl31/SPEED">
+  <a href="https://github.com/Carl31/PosterAssistant">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -136,7 +123,7 @@ Major frameworks/libraries that we used to bootstrap our project:
 
 Carl Santos
 
-Project Link: [https://github.com/Carl31/SPEED](https://github.com/Carl31/PosterAssistant)
+Project Link: [https://github.com/Carl31/PosterAssistant](https://github.com/Carl31/PosterAssistant)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -155,13 +142,6 @@ Helpful resources:
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/Carl31/PosterAssistant.svg?style=for-the-badge
-[contributors-url]: https://github.com/Carl31/PosterAssistant/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Carl31/PosterAssistant.svg?style=for-the-badge
-[forks-url]: https://github.com/Carl31/PosterAssistant/network/members
-[issues-shield]: https://img.shields.io/github/issues/Carl31/PosterAssistant.svg?style=for-the-badge
-[issues-url]: https://github.com/Carl31/PosterAssistant/issues
 [product-screenshot]: images/screenshot.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
