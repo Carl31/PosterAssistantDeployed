@@ -1,5 +1,5 @@
 const fs = require('fs');
-const File = require('../models/file'); // mongoose schema
+const File = require('../models/File'); // mongoose schema
 
 // Upload JSON content to MongoDB and return its ID
 async function uploadJsonContent(jsonContent) {
