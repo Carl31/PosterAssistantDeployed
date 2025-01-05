@@ -11,40 +11,50 @@ require("dotenv").config({ path: '../.env' });
 const app = express();
 app.use(bodyParser.json());
 
-// Ensure database connection is established
-connectDB().then(() => {
-  console.log('Database connected successfully.');
-}).catch((err) => {
-  console.error('Failed to connect to DB:', err);
-});
 
-// Define your routes
-app.get('/api', (req, res) => {
-  res.status(200).send('Hello from Express API!');
-});
+// Connect to the database before setting up routes
+// START SERVER: If running locally, use app.listen
+if (process.env.NODE_ENV !== 'production') {
+  connectDB().then(() => {
+    console.log('No errors with DB connection.');
 
-app.post('/api/submit-json', async (req, res) => {
-  const receivedJson = req.body;
 
+
+    // Call the startServer function
+    startServer();
+
+
+  }).catch((err) => {
+    console.error("Failed to connect to DB:", err);
+    process.exit(1); // Exit if DB connection fails
+  });
+}
+
+const startServer = async () => {
   try {
-    // Upload JSON to MongoDB
-    const objectId = await uploadJsonContent(receivedJson);
-
-    // Send object ID to the local server
-    const localServerApi = `${process.env.NGROK_URL}/process-object`; // Replace with your local server's URL
-    const response = await axios.post(localServerApi, { objectId });
-
-    console.log('Received response from local server:', response.data);
-    res.status(200).send({
-      message: 'Process initiated successfully',
-      localResponse: response.data,
+    // Start the Express server
+    app.listen(PORT, async () => {
+      console.log(`App running on http://localhost:${PORT}`);
     });
-
   } catch (err) {
-    console.error('Error processing request:', err);
-    res.status(500).send({ error: 'Failed to process request', details: err.message });
+    console.error('Error starting server:', err);
   }
-});
+};
 
-// Export the handler
-module.exports = app;
+export default async function handler(req, res) {
+  if (req.method === 'GET') {
+    // try {
+    //   // Ensure DB connection is initialized
+    //   await connectDB();
+    //   res.status(200).send('Hello from Express API!');
+    // } catch (err) {
+    //   console.error('Error connecting to DB:', err);
+    //   res.status(500).send('Failed to connect to database.');
+    // }
+    res.status(200).send('Hello from Express API!');
+  } else {
+    res.status(405).send({ message: 'Method Not Allowed' });
+  }
+}
+
+
