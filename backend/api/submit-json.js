@@ -17,7 +17,7 @@ export default async function handler(req, res) {
       const objectId = await uploadJsonContent(receivedJson);
 
       // Send object ID to the local server
-      const localServerApi = `${ngrokURL}/process-object`;
+      const localServerApi = `${ngrokURL}/process-object`; // Might cause error because doenst have "http://""
       const response = await axios.post(localServerApi, { objectId });
 
       console.log('Received response from local server:', response.data);
