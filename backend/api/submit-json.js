@@ -1,6 +1,6 @@
-import axios from 'axios';
-import connectDB from '../utils/connectDB';
-import uploadJsonContent from '../utils/uploadJsonContent';
+const axios = require('axios');
+const connectDB = require('../utils/db'); // import the db connection
+const uploadJsonContent = require('../utils/uploadJsonContent');
 
 //const ngrokURL = 'https://your-ngrok-url.com'; // Replace with your actual ngrok URL
 const ngrokURL = process.env.NGROK_URL;
