@@ -8,4 +8,6 @@ const fileSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('File', fileSchema);
+const File = mongoose.model('File', FileSchema);
+
+export default File;  // Ensure the File model is exported as the default
