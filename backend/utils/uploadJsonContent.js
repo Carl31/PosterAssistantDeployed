@@ -26,4 +26,4 @@ async function uploadJsonContent(jsonContent) {
     }
 }
 
-module.exports = uploadJsonContent;
+export default uploadJsonContent;

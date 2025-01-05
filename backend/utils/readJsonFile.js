@@ -21,4 +21,4 @@ async function readJsonFile(fileId) {
     }
 }
 
-module.exports = readJsonFile;
+export default readJsonFile;
