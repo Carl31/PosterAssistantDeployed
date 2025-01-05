@@ -1,4 +1,5 @@
 import readJsonFile from '../utils/readJsonFile.js';
+import connectDB from '../utils/db.js'; // import the db connection
 const ngrokURL = process.env.NGROK_URL;
 
 export default async function handler(req, res) {
