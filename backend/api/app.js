@@ -1,11 +1,12 @@
-const express = require('express');
-const connectDB = require('../utils/db'); // import the db connection
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const uploadJsonContent = require('../utils/uploadJsonContent');
-const PORT = process.env.PORT || 5000;
-const ngrokURL = process.env.NGROK_URL;
-require("dotenv").config({ path: '../.env' });
+import express from 'express';
+import connectDB from '../utils/db'; // import the db connection
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import uploadJsonContent from '../utils/uploadJsonContent';
+
+// Load environment variables from .env
+import dotenv from 'dotenv';
+dotenv.config({ path: '../.env' });
 
 const app = express();
 app.use(bodyParser.json());

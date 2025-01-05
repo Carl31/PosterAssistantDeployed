@@ -1,5 +1,5 @@
-const fs = require('fs');
-const File = require('../models/File'); // mongoose schema
+import fs from 'fs';
+import File from '../models/File'; // mongoose schema
 
 // read file from db
 async function readJsonFile(fileId) {
