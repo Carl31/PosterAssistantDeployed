@@ -1,8 +1,8 @@
 import express from 'express';
-import connectDB from '../utils/db'; // import the db connection
+import connectDB from '../utils/db.js'; // import the db connection
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-import uploadJsonContent from '../utils/uploadJsonContent';
+import uploadJsonContent from '../utils/uploadJsonContent.js';
 
 // Load environment variables from .env
 import dotenv from 'dotenv';

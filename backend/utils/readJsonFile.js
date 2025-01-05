@@ -1,5 +1,5 @@
 import fs from 'fs';
-import File from '../models/File'; // mongoose schema
+import File from '../models/File.js'; // mongoose schema
 
 // read file from db
 async function readJsonFile(fileId) {

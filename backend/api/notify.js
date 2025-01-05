@@ -1,4 +1,4 @@
-import readJsonFile from '../utils/readJsonFile';
+import readJsonFile from '../utils/readJsonFile.js';
 const ngrokURL = process.env.NGROK_URL;
 
 export default async function handler(req, res) {

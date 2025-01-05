@@ -1,5 +1,5 @@
 import fs from 'fs';
-import File from '../models/File'; // mongoose schema
+import File from '../models/File.js'; // mongoose schema
 
 // Upload JSON content to MongoDB and return its ID
 async function uploadJsonContent(jsonContent) {
