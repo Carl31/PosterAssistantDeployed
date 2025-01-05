@@ -2,7 +2,6 @@ const express = require('express');
 const connectDB = require('../utils/db'); // import the db connection
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const axios = require('axios');
 const uploadJsonContent = require('../utils/uploadJsonContent');
 const PORT = process.env.PORT || 5000;
 const ngrokURL = process.env.NGROK_URL;
