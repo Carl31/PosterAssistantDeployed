@@ -7,7 +7,7 @@ export default async function handler(req, res) {
       const receivedData = req.body;
       const objectId = receivedData.objectId;
 
-      console.log('Received response from local server:', response.data);
+      console.log('Received response from local server:', objectId);
 
       // Connect to DB
       await connectDB();
