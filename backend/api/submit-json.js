@@ -16,12 +16,20 @@ export default async function handler(req, res) {
       // Upload JSON to MongoDB
       const objectId = await uploadJsonContent(receivedJson);
 
-      // Send object ID to the local server
+      // Send object ID to the local server without waiting for a response
       const localServerApi = `https://${ngrokURL}/process-object`;
-      const response = await axios.post(localServerApi, { objectId });
+      axios.post(localServerApi, { objectId }) // No await here
+        .then(() => {
+          console.log('Notified local server successfully');
+        })
+        .catch(err => {
+          console.error('Error notifying local server:', err);
+          // Notify self-hosted error route
+          axios.post(`https://${process.env.DEPLOYED_SERVER_URL}/api/error`, { errReason: 'Failed to notify local server' });
+        });
 
-      console.log('Received response from local server:', response.data);
-      res.send({ message: 'Process initiated successfully', localResponse: response.data });
+      // Respond to the client immediately
+      res.send({ message: 'Process initiated successfully', objectId });
     } catch (err) {
       console.error('Error processing request:', err);
       res.status(500).send({ error: 'Failed to process request', details: err.message });
@@ -30,3 +38,4 @@ export default async function handler(req, res) {
     res.status(405).send({ message: 'Method Not Allowed' });
   }
 }
+
