@@ -5,11 +5,12 @@ export default async function handler(req, res) {
     try {
       const receivedData = req.body;
       const update = receivedData.status;
-    // Do something with the error reason? Make it show on frontend?
 
+      // Log the progress update
       console.log('Progress update from local server:', update);
-      
-      //res.send({ message: 'Process initiated successfully' });
+
+      // Respond immediately to acknowledge the update
+      res.send({ message: 'Progress update received successfully' });
     } catch (err) {
       console.error('Error processing request:', err);
       res.status(500).send({ error: 'Failed to process request', details: err.message });
