@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
       // Send object ID to the local server without waiting for a response
       const localServerApi = `https://${ngrokURL}/process-object`;
-      axios.post(localServerApi, { objectId }) // No await here
+      await axios.post(localServerApi, { objectId })
         .then(() => {
           console.log('Notified local server successfully');
         })
