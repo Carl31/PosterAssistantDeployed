@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 const cors = require('cors');
 const cors = require('cors');
 
+// Note: Don't affect vercel deployment (edit them in vercel.json)
 // const corsOptions = {
 //     origin: process.env.FRONTEND_URL, // Allow requests from your frontend
 //     credentials: true, // Allow cookies and credentials
