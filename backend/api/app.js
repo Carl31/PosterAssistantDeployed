@@ -12,11 +12,16 @@ const app = express();
 app.use(bodyParser.json());
 
 const cors = require('cors');
-const corsOptions ={
-    origin:`${process.env.FRONTEND_URL}`, 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}
+const cors = require('cors');
+
+const corsOptions = {
+    origin: process.env.FRONTEND_URL, // Allow requests from your frontend
+    credentials: true, // Allow cookies and credentials
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allowed HTTP methods
+    allowedHeaders: 'Content-Type,Authorization', // Allowed headers
+    optionsSuccessStatus: 200, // For preflight requests
+};
+
 app.use(cors(corsOptions));
 
 
