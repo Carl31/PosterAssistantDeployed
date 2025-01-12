@@ -11,33 +11,6 @@ dotenv.config({ path: '../.env' });
 const app = express();
 app.use(bodyParser.json());
 
-const cors = require('cors');
-const cors = require('cors');
-
-// Note: Don't affect vercel deployment (edit them in vercel.json)
-// const corsOptions = {
-//     origin: process.env.FRONTEND_URL, // Allow requests from your frontend
-//     credentials: true, // Allow cookies and credentials
-//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allowed HTTP methods
-//     allowedHeaders: 'Content-Type,Authorization', // Allowed headers
-//     optionsSuccessStatus: 200, // For preflight requests
-// };
-const corsOptions = {
-  origin: '*',
-};
-
-app.use(cors(corsOptions));
-
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(204); // Preflight request
-  }
-  next();
-});
-
 
 // Connect to the database before setting up routes
 // START SERVER: If running locally, use app.listen
