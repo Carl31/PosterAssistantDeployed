@@ -20,7 +20,7 @@ export default async function handler(req, res) {
             // Upload JSON to MongoDB
             const output = await readJsonFile(objectID);
 
-            res.json(output); // Send the file data as JSON
+            res.status(200).json(output);
         } catch (err) {
             res.status(500).send({ error: 'Error fetching file', details: err.message });
         }
