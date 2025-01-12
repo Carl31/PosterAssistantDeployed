@@ -20,7 +20,7 @@ const InputPage = () => {
             const result = await axios.post(`${apiUrl}/submit-json`, {
                 jsonData,
             });
-            setResponse(`File uploaded successfully. Object ID: ${result.data.objectId}`);
+            setResponse(`File uploaded successfully. Object ID: ${result.data.objectId}`); // FIXME: might me the wrong way to access objectId
 
             // Navigate to the DisplayPage with the objectId
             navigate(`/display/${result.data.objectId}`);
