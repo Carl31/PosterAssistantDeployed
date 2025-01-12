@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // Removes strict mode (which loads pages twice)
+  // Adds strict mode (which loads every page twice)
   // <React.StrictMode>
   //   <App />
   // </React.StrictMode>

@@ -3,6 +3,7 @@ import connectDB from '../utils/db.js'; // import the db connection
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import uploadJsonContent from '../utils/uploadJsonContent.js';
+import cors from 'cors';
 
 // Load environment variables from .env
 import dotenv from 'dotenv';
@@ -10,6 +11,36 @@ dotenv.config({ path: '../.env' });
 
 const app = express();
 app.use(bodyParser.json());
+
+
+
+
+
+
+// ENABLLING CORS (ignore)
+
+// Use CORS middleware globally
+const corsOptions = {
+  origin: '*', // Or specify your frontend URL in production
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
+// Handle OPTIONS requests (preflight)
+app.options('*', (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.status(200).end(); // Respond with 200 OK for preflight requests
+});
+
+
+
+
+
 
 
 // Connect to the database before setting up routes
