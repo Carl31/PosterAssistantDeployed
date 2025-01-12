@@ -17,7 +17,7 @@ const InputPage = () => {
     const handleSubmit = async () => {
         try {
             // Send the JSON content to the backend
-            const result = await axios.post(`${apiUrl}/submit-json`, {
+            const result = await axios.get(`${apiUrl}/submit-json`, { // FIXME: should be a POST but doesnt work with vercel for some reason
                 jsonData,
             });
             setResponse(`File uploaded successfully. Object ID: ${result.data.objectId}`); // FIXME: might me the wrong way to access objectId
