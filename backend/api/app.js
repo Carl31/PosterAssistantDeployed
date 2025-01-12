@@ -11,6 +11,14 @@ dotenv.config({ path: '../.env' });
 const app = express();
 app.use(bodyParser.json());
 
+const cors = require('cors');
+const corsOptions ={
+    origin:`${process.env.FRONTEND_URL}`, 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}
+app.use(cors(corsOptions));
+
 
 // Connect to the database before setting up routes
 // START SERVER: If running locally, use app.listen
