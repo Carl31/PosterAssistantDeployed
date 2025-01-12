@@ -1,14 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import InputPage from './pages/InputPage';
+import DisplayPage from './pages/DisplayPage';
 
-function App() {
+const App = () => {
+  const [objectId, setObjectId] = useState('');
+
   return (
-    <div className="App">
-      <header className="App-header">
-      <h1>Hello, World!</h1>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          {/* Pass the InputPage component */}
+          <Route path="/" element={<InputPage setObjectId={setObjectId} />} />
+
+          {/* Pass the DisplayPage component with a URL parameter */}
+          <Route
+            path="/display/:objectId"
+            element={<DisplayPage objectId={objectId} />}
+          />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
