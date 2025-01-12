@@ -5,7 +5,7 @@ import File from '../models/File.js'; // mongoose schema
 async function uploadJsonContent(jsonContent) {
     try {
         // Ensure the JSON content is converted to a Buffer
-        const jsonBuffer = Buffer.from(jsonContent);
+        const jsonBuffer = Buffer.from(JSON.stringify(jsonContent));
 
         // Create a new file document
         const file = new File({
