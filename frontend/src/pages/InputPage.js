@@ -16,9 +16,18 @@ const InputPage = () => {
 
     const handleSubmit = async () => {
         try {
+            // Attempt to parse the jsonData as a valid JSON object
+            let parsedJsonData;
+            try {
+                parsedJsonData = JSON.parse(jsonData); // Try to parse the JSON data
+            } catch (error) {
+                setResponse('Invalid JSON format.');
+                return;
+            }
+            
             // Send the JSON content to the backend
             const result = await axios.get(`${apiUrl}/submit-json`, { // FIXME: should be a POST but doesnt work with vercel for some reason.
-                params: { json: jsonData } // Use `params` for query parameters
+                params: { json: parsedJsonData } // Use `params` for query parameters
             });
             setResponse(`File uploaded successfully. Object ID: ${result.data.objectId}`); // FIXME: might me the wrong way to access objectId
 
