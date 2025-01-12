@@ -6,7 +6,7 @@ import uploadJsonContent from '../utils/uploadJsonContent.js';
 const ngrokURL = process.env.NGROK_URL;
 
 export default async function handler(req, res) {
-  if (req.method === 'PUT') { // FIXME: shoould be a post
+  if (req.method === 'POST') { // FIXME: shoould be a post
     try {
       const receivedJson = req.body;
       console.log('Test:', req.body);
