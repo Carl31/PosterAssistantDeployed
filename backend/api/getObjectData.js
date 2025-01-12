@@ -4,6 +4,7 @@ import connectDB from '../utils/db.js'; // import the db connection
 export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
+            console.log('Request Query:', req.query);
             const { objectID } = req.query; // Retrieve objectID from query parameters
             if (!objectID) {
                 return res.status(400).send({ error: 'objectID is required' });
