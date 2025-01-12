@@ -12,13 +12,13 @@ export default async function handler(req, res) {
                 return res.status(400).send({ error: 'objectID is required' });
             }
 
-            console.log('Received response from local server:', objectId);
+            console.log('Received response from local server:', objectID);
 
             // Connect to DB
             await connectDB();
       
             // Upload JSON to MongoDB
-            const output = await readJsonFile(objectId);
+            const output = await readJsonFile(objectID);
 
             res.json(output); // Send the file data as JSON
         } catch (err) {
