@@ -8,7 +8,7 @@ const ngrokURL = process.env.NGROK_URL;
 export default async function handler(req, res) {
   if (req.method === 'GET') { // FIXME: should be a POST but doesnt work with vercel for some reason
     try {
-      const receivedJson = req.body;
+      const receivedJson = req.query.json;
 
       // Connect to DB
       await connectDB();
