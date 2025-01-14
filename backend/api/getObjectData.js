@@ -16,7 +16,7 @@ export default async function handler(req, res) {
 
             // Connect to DB
             await connectDB();
-      
+
             // Upload JSON to MongoDB
             const output = await readJsonFile(objectID);
 
@@ -24,6 +24,12 @@ export default async function handler(req, res) {
         } catch (err) {
             res.status(500).send({ error: 'Error fetching file', details: err.message });
         }
+    } else if (req.method === 'OPTIONS') {
+        // Handle the preflight request
+        res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins or specify specific origins
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow specific headers
+        res.status(200).end(); // Respond with 200 OK and terminate the response
     } else {
         res.status(405).send({ message: 'Method Not Allowed' });
     }
