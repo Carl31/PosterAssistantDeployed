@@ -1,39 +1,23 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { FaRocket } from 'react-icons/fa';
 
 const StartPage = () => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-purple-500 to-blue-500 text-white">
-      <motion.div 
-        className="text-center"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1 }}
-      >
-        <motion.div 
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 10, ease: 'linear' }}
-          className="text-6xl mb-4"
-        >
-          <FaRocket />
-        </motion.div>
-        <h1 className="text-5xl font-bold mb-4">Welcome to Poster Assistant</h1>
-        <p className="text-lg mb-6">Your journey starts here. Let's create something amazing together.</p>
-        <motion.button 
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          className="bg-white text-purple-600 px-6 py-3 rounded-2xl shadow-lg font-semibold"
-          onClick={() => navigate('/input')}
-        >
-          Get Started
-        </motion.button>
-      </motion.div>
-    </div>
-  );
+    return (
+        <div className="flex items-center justify-center min-h-screen bg-cream">
+            <div className="bg-white p-8 rounded-2xl shadow-lg text-center max-w-md">
+                <h1 className="text-4xl font-bold text-gray-800 mb-4">Welcome</h1>
+                <p className="text-lg text-gray-600 mb-6">We're glad to have you here. Let's get started!</p>
+                <button
+                    className="bg-blue-500 text-white py-2 px-6 rounded-full text-lg font-semibold transition-all duration-300 hover:bg-blue-700"
+                    onClick={() => navigate('/input')}
+                >
+                    Get Started
+                </button>
+            </div>
+        </div>
+    );
 };
 
 export default StartPage;
