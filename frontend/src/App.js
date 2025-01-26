@@ -9,9 +9,9 @@ const App = () => {
   const navigate = useNavigate(); // Replace history with useNavigate
 
   // For debugging
-  useEffect(() => {
-    console.log('Authentication state has changed:', isAuthenticated);
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   console.log('Authentication state has changed:', isAuthenticated);
+  // }, [isAuthenticated]);
 
   useEffect(() => {
     // Check localStorage for authentication state on page load
