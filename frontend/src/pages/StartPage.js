@@ -5,7 +5,7 @@ const StartPage = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="flex items-center justify-center min-h-screen bg-gray-500">
             <div className="bg-white p-8 rounded-2xl shadow-lg text-center max-w-md">
                 <h1 className="text-4xl font-bold text-gray-800 mb-4">Welcome</h1>
                 <p className="text-lg text-gray-600 mb-6">We're glad to have you here. Let's get started!</p>
