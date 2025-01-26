@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FaCarOn } from 'react-icons/fa';
+import { FaRocket } from 'react-icons/fa';
 
 const StartPage = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const StartPage = () => {
           transition={{ repeat: Infinity, duration: 10, ease: 'linear' }}
           className="text-6xl mb-4"
         >
-          <FaCarOn />
+          <FaRocket />
         </motion.div>
         <h1 className="text-5xl font-bold mb-4">Welcome to Poster Assistant</h1>
         <p className="text-lg mb-6">Your journey starts here. Let's create something amazing together.</p>
