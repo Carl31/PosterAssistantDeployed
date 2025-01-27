@@ -6,7 +6,6 @@ import StartPage from './StartPage';
 
 const ProtectedApp = () => {
   return (
-    <div className="ProtectedApp App">
       <Routes>
         <Route
           path="/"
@@ -21,7 +20,6 @@ const ProtectedApp = () => {
           element={<DisplayPage />}
         />
       </Routes>
-    </div>
   );
 };
 

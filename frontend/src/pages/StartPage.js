@@ -1,22 +1,35 @@
-import React from 'react';
+import React from "react";
 import { useNavigate } from 'react-router-dom';
+import Layout from './Layout';
+
 
 const StartPage = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-500">
-            <div className="bg-white p-8 rounded-2xl shadow-lg text-center max-w-md">
-                <h1 className="text-4xl font-bold text-gray-800 mb-4">Poster AI App</h1>
-                <p className="text-lg text-gray-600 mb-6">We're glad to have you here. Let's get started!</p>
+
+        <Layout>
+            <h1 className="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left">
+                Create your own poster with
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">
+                    AI
+                </span>
+            </h1>
+            <p className="leading-normal text-base md:text-2xl mb-8 text-center md:text-left">
+                Welcome! We're thrilled to have you here.
+            </p>
+
+
+            <div className=" pt-4 flex justify-center items-center">
                 <button
-                    className="bg-blue-500 text-white py-2 px-6 rounded-full text-lg font-semibold transition-all duration-300 hover:bg-blue-700"
+                    className="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-2 px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
+                    type="button"
                     onClick={() => navigate('/input')}
                 >
-                    Get Started
+                    Start
                 </button>
             </div>
-        </div>
+        </Layout>
     );
 };
 
