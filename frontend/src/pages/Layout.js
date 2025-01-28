@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
     return (
 
         <main className="min-h-screen m-0 p-0 leading-normal tracking-normal text-indigo-400 bg-cover bg-fixed bg-[url('header.png')]">
-            <div className="p-8">
+            <div className="p-8 min-h-screen">
                 {/* Nav */}
                 <div className="w-full container mx-auto">
                     <div className="w-full flex items-center justify-between">
@@ -60,7 +60,7 @@ const Layout = ({ children }) => {
                     </div> */}
 
                     {/* Footer */}
-                    <div className="fixed bottom-0 w-full pt-16 pb-6 text-sm text-center fade-in">
+                    <div className="bottom-0 w-full pt-16 pb-6 text-sm text-center fade-in">
                         <a className="text-gray-500 no-underline hover:no-underline" href="#">&copy; Poster App 2025</a>
                         - By Carlos aka SickShotsNz
                         {/* <a class="text-gray-500 no-underline hover:no-underline" href="https://www.tailwindtoolbox.com">TailwindToolbox.com</a> */}

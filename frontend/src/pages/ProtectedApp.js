@@ -5,6 +5,38 @@ import DisplayPage from './DisplayPage';
 import StartPage from './StartPage';
 
 const ProtectedApp = () => {
+
+  const handleSubmit = (userImageLink, templateName, additionalPngs) => {
+    const jsonContent = {
+      vehicle: {
+        make: "",
+        model: "",
+        year: "",
+        description: "",
+      },
+      template: {
+        path: "D:/Documents/GithubRepos/PosterAssistant/templates/",
+        name: templateName, // Set template name
+      },
+      photo: {
+        path: "D:/Documents/GithubRepos/PosterAssistant/photos/",
+        name: "user_photo.jpg",
+      },
+      added: {
+        path: "D:/Documents/PosterAssistantLocal/PNGS/",
+        makePng: "",
+        modelPng: "",
+        add1: additionalPngs[0] || "", // Use first element of additionalPngs, or empty if undefined
+        add2: additionalPngs[1] || "", // Use second element of additionalPngs, or empty if undefined
+      },
+      userImageUrl: userImageLink, // Set user image link
+    };
+  
+    console.log("Generated JSON:", jsonContent);
+    return jsonContent;
+  };
+
+
   return (
       <Routes>
         <Route
@@ -13,7 +45,7 @@ const ProtectedApp = () => {
         />
         <Route
           path="/input"
-          element={<InputPage />}
+          element={<InputPage onSubmit={handleSubmit} />}
         />
         <Route
           path="/display/:objectId"
