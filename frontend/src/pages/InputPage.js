@@ -35,10 +35,10 @@ const InputPage = ({ onSubmit }) => {
             // Attempt to parse the jsonData as a valid JSON object
             let parsedJsonData;
             try {
-                parsedJsonData = JSON.parse(jsonData); // Try to parse the JSON data
+                parsedJsonData = JSON.parse(jsonString); // Try to parse the JSON data
             } catch (error) {
                 setResponse('Invalid JSON format.');
-                console.log("Invalid JSON:", jsonData);
+                console.log("Invalid JSON:", jsonString);
                 return;
             }
 
