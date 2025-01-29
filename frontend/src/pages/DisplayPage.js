@@ -9,6 +9,7 @@ const apiUrl = process.env.REACT_APP_API_URL
 const DisplayPage = () => {
     const { objectId } = useParams(); // Extract objectId from the URL
     const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -17,6 +18,7 @@ const DisplayPage = () => {
                     params: { objectID: objectId } // Use `params` for query parameters
                 });
                 setData(result.data);
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -30,7 +32,7 @@ const DisplayPage = () => {
         }
     }, [objectId]);
 
-    if (!data) {
+    if (loading) {
         return <Loading/>
     }
 
