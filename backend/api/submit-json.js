@@ -44,5 +44,7 @@ export default async function handler(req, res) {
   } else {
     res.status(405).send({ message: 'Method Not Allowed' });
   }
+  console.log("Allowed FRONTEND_URL:", process.env.FRONTEND_URL);
+
 }
 
