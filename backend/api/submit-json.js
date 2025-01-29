@@ -11,6 +11,7 @@ const allowedOrigins = [
 
 export default async function handler(req, res) {
   if (req.method === 'POST') { // FIXME: shoould be a post
+    
     // Handle the preflight request
     const origin = req.headers.origin;
     if (allowedOrigins.includes(origin)) {
