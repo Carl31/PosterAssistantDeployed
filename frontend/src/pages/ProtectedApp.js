@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import InputPage from './InputPage';
 import DisplayPage from './DisplayPage';
 import StartPage from './StartPage';
+import LoadingPage from './LoadingPage';
 
 const ProtectedApp = () => {
 
@@ -50,6 +51,10 @@ const ProtectedApp = () => {
         <Route
           path="/display/:objectId"
           element={<DisplayPage />}
+        />
+        <Route
+          path="/loading"
+          element={<LoadingPage />}
         />
       </Routes>
   );
