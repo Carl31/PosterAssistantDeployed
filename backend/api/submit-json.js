@@ -4,10 +4,23 @@ import uploadJsonContent from '../utils/uploadJsonContent.js';
 
 //const ngrokURL = 'https://your-ngrok-url.com'; // Replace with your actual ngrok URL
 const ngrokURL = process.env.NGROK_URL;
-const allowedOrigin = process.env.FRONTEND_URL || process.env.FRONTEND_URL2;
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  process.env.FRONTEND_URL2
+];
 
 export default async function handler(req, res) {
   if (req.method === 'POST') { // FIXME: shoould be a post
+    // Handle the preflight request
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+      console.log("Allowed origin:", origin);
+    } // Allow all origins or specify specific origins
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow specific headers
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+
     try {
       const receivedJson = req.body;
       console.log('Test:', req.body);
@@ -38,7 +51,11 @@ export default async function handler(req, res) {
     }
   } else if (req.method === 'OPTIONS') {
     // Handle the preflight request
-    res.setHeader('Access-Control-Allow-Origin', allowedOrigin); // Allow all origins or specify specific origins
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+      console.log("Allowed origin:", origin);
+    } // Allow all origins or specify specific origins
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow specific headers
     res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -46,7 +63,5 @@ export default async function handler(req, res) {
   } else {
     res.status(405).send({ message: 'Method Not Allowed' });
   }
-  console.log("Allowed FRONTEND_URL:", process.env.FRONTEND_URL);
-
 }
 
