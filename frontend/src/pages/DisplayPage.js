@@ -1,42 +1,38 @@
 // DisplayPage.js
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom'; // Import useParams for accessing route parameters
+import { useParams } from 'react-router-dom'; // Import useParams for accessing route parameters
+import Loading from '../pages/LoadingPage';
 
 const apiUrl = process.env.REACT_APP_API_URL
 
 const DisplayPage = () => {
-    const { objectId } = useParams();
-    const navigate = useNavigate();
-    
+    const { objectId } = useParams(); // Extract objectId from the URL
     const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    
-    const hasFetched = useRef(false); // Prevent multiple fetch calls
 
     useEffect(() => {
-        if (!objectId || hasFetched.current) return; // Prevent refetching
-
-        hasFetched.current = true; // Mark as fetched
-        navigate("/loading"); // Redirect to loading page
-
         const fetchData = async () => {
             try {
                 const result = await axios.get(`${apiUrl}/getObjectData`, {
-                    params: { objectID: objectId }
+                    params: { objectID: objectId } // Use `params` for query parameters
                 });
                 setData(result.data);
             } catch (error) {
-                console.error("Error fetching data:", error);
-            } finally {
-                setLoading(false);
+                console.error('Error fetching data:', error);
             }
         };
 
-        fetchData();
-    }, [objectId, navigate]);
+        if (objectId) {
+            fetchData();
+        }
+        else {
+            console.error('No object ID provided');
+        }
+    }, [objectId]);
 
-    if (loading) return null; // Prevents rendering while transitioning
+    if (!data) {
+        return <Loading/>
+    }
 
     return (
         <div>
