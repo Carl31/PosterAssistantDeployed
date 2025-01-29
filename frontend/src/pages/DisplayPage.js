@@ -1,5 +1,5 @@
 // DisplayPage.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom'; // Import useParams for accessing route parameters
 
@@ -8,13 +8,20 @@ const apiUrl = process.env.REACT_APP_API_URL
 const DisplayPage = () => {
     const { objectId } = useParams();
     const navigate = useNavigate();
+    
     const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true); // Track loading state
+    const [loading, setLoading] = useState(true);
+    
+    const hasFetched = useRef(false); // Prevent multiple fetch calls
 
     useEffect(() => {
+        if (!objectId || hasFetched.current) return; // Prevent refetching
+
+        hasFetched.current = true; // Mark as fetched
+        navigate("/loading"); // Redirect to loading page
+
         const fetchData = async () => {
             try {
-                setLoading(true);
                 const result = await axios.get(`${apiUrl}/getObjectData`, {
                     params: { objectID: objectId }
                 });
@@ -26,22 +33,10 @@ const DisplayPage = () => {
             }
         };
 
-        if (objectId) {
-            fetchData();
-        } else {
-            console.error("No object ID provided");
-        }
-    }, [objectId]);
+        fetchData();
+    }, [objectId, navigate]);
 
-    useEffect(() => {
-        if (loading) {
-            navigate("/loading");
-        }
-    }, [loading, navigate]);
-
-    if (loading) {
-        return null; // Prevents rendering while navigating
-    }
+    if (loading) return null; // Prevents rendering while transitioning
 
     return (
         <div>
