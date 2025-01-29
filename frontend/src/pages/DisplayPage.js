@@ -6,21 +6,23 @@ import { useParams, useNavigate } from 'react-router-dom'; // Import useParams f
 const apiUrl = process.env.REACT_APP_API_URL
 
 const DisplayPage = () => {
-    const { objectId } = useParams(); // Extract objectId from the URL
+    const { objectId } = useParams();
     const navigate = useNavigate();
     const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true); // Track loading state
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                navigate("/loading"); // Navigate to loading page while fetching
+                setLoading(true);
                 const result = await axios.get(`${apiUrl}/getObjectData`, {
-                    params: { objectID: objectId } // Use `params` for query parameters
+                    params: { objectID: objectId }
                 });
                 setData(result.data);
-                navigate(`/display/${objectId}`); // Navigate back after data is loaded
             } catch (error) {
                 console.error("Error fetching data:", error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -29,10 +31,16 @@ const DisplayPage = () => {
         } else {
             console.error("No object ID provided");
         }
-    }, [objectId, navigate]);
+    }, [objectId]);
 
-    if (!data) {
-        return null; // Prevent rendering anything while navigating
+    useEffect(() => {
+        if (loading) {
+            navigate("/loading");
+        }
+    }, [loading, navigate]);
+
+    if (loading) {
+        return null; // Prevents rendering while navigating
     }
 
     return (
