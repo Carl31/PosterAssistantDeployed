@@ -4,8 +4,26 @@ const allowedOrigins = [
   process.env.FRONTEND_URL2
 ];
 
+let clients = [];
+
+// Function to send updates to all clients
+const sendUpdate = (update) => {
+  clients.forEach(client => {
+      client.write(`data: ${JSON.stringify({ status: update })}\n\n`);
+  });
+};
+
 export default async function handler(req, res) {
   if (req.method === 'POST') {
+    // For progress updates to frontend:
+    res.setHeader("Content-Type", "text/event-stream");
+    res.setHeader("Cache-Control", "no-cache");
+    res.setHeader("Connection", "keep-alive");
+    clients.push(res); // Store client connection
+    req.on("close", () => {
+      clients = clients.filter(client => client !== res); // Remove disconnected client
+  });
+
     // Handle the preflight request
     const origin = req.headers.origin;
     if (allowedOrigins.includes(origin)) {
@@ -19,6 +37,7 @@ export default async function handler(req, res) {
     try {
       const receivedData = req.body;
       const update = receivedData.status;
+      sendUpdate(update); // Send update to frontend
 
       // Log the progress update
       console.log('Progress update from local server:', update);

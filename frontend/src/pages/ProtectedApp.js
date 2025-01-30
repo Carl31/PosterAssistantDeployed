@@ -4,6 +4,7 @@ import InputPage from './InputPage';
 import DisplayPage from './DisplayPage';
 import StartPage from './StartPage';
 import LoadingPage from './LoadingPage';
+import OutputPage from './OutputPage'
 
 const ProtectedApp = () => {
 
@@ -55,6 +56,10 @@ const ProtectedApp = () => {
         <Route
           path="/loading"
           element={<LoadingPage />}
+        />
+        <Route
+          path="/output"
+          element={<OutputPage />}
         />
       </Routes>
   );

@@ -94,7 +94,7 @@ const InputPage = ({ onSubmit }) => {
                     <input
                         className="mb-4 shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
                         type="text"
-                        placeholder="Additional PNGs (comma-separated)"
+                        placeholder="Additional Brands (comma-separated)"
                         value={additionalPngs}
                         onChange={(e) => setAdditionalPngs(e.target.value)}
                     />
@@ -105,7 +105,7 @@ const InputPage = ({ onSubmit }) => {
                         className="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-2 px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
                         type="submit"
                     >
-                        Generate JSON
+                        Go!
                     </button>
                 </div>
             </form>

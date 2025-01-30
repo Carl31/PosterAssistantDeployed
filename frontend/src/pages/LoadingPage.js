@@ -1,10 +1,30 @@
 import Loader from "../components/Loader";
-import React from "react";
 import { useNavigate } from 'react-router-dom';
 import Layout from './Layout';
+import { React, useEffect, useState } from "react";
+
+const apiUrl = process.env.REACT_APP_API_URL
 
 const LoadingPage = () => {
     const navigate = useNavigate();
+    const [status, setStatus] = useState("Waiting for updates...");
+
+    // for recieving real-time updates from backend
+    useEffect(() => {
+        const eventSource = new EventSource(`${apiUrl}/progress`);
+
+        eventSource.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            setStatus(data.status);
+        };
+
+        eventSource.onerror = () => {
+            console.error("Error connecting to progress updates");
+            eventSource.close();
+        };
+
+        return () => eventSource.close(); // Cleanup on unmount
+    }, []);
 
     return (
 
@@ -24,8 +44,13 @@ const LoadingPage = () => {
                         Loading, please wait.
                     </p>
                 </div>
+                <div>
+                    <p className="mt-4 leading-normal text-base mb-8 text-center text-gray-400">
+                        {status}
+                    </p>
+                </div>
             </div>
-            
+
         </Layout>
     );
 };
