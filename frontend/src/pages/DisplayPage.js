@@ -21,7 +21,8 @@ const DisplayPage = () => {
                 });
                 setData(result.data);
                 let jsonLinks = [];
-                setJsonLinks([result.data.output[0], result.data.output[1], result.data.output[2]]); // FIXME: This is not error-tested and will probably not work right now.
+                //setJsonLinks([result.data.output[0], result.data.output[1], result.data.output[2]]); // FIXME: This is not error-tested and will probably not work right now.
+                setJsonLinks(1,2,3);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);

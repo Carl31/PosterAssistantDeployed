@@ -42,13 +42,23 @@ export default async function handler(req, res) {
       res.status(500).send({ error: 'Failed to process request', details: err.message });
     }
   }  else if (req.method === 'GET') {
+    // Handle the preflight request
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+      console.log("Allowed origin:", origin);
+    } // Allow all origins or specify specific origins
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow specific headers
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+
     // For progress updates to frontend:
     res.setHeader("Content-Type", "text/event-stream");
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Connection", "keep-alive");
 
     clients.push(res); // Store client connection
-    
+
     req.on("close", () => {
       clients = clients.filter(client => client !== res); // Remove disconnected client
     });
