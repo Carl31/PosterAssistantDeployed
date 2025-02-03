@@ -45,7 +45,7 @@ const DisplayPage = () => {
         //     <h1>Database Result</h1>
         //     <pre>{JSON.stringify(data, null, 2)}</pre>
         // </div>
-        <LoadingPage posterLinks={jsonLinks}/>
+        <OutputPage posterLinks={jsonLinks}/>
     );
 };
 

@@ -9,20 +9,12 @@ let clients = [];
 // Function to send updates to all clients
 const sendUpdate = (update) => {
   clients.forEach(client => {
-      client.write(`data: ${JSON.stringify({ status: update })}\n\n`);
+    client.write(`data: ${JSON.stringify({ status: update })}\n\n`);
   });
 };
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    // For progress updates to frontend:
-    res.setHeader("Content-Type", "text/event-stream");
-    res.setHeader("Cache-Control", "no-cache");
-    res.setHeader("Connection", "keep-alive");
-    clients.push(res); // Store client connection
-    req.on("close", () => {
-      clients = clients.filter(client => client !== res); // Remove disconnected client
-  });
 
     // Handle the preflight request
     const origin = req.headers.origin;
@@ -37,10 +29,11 @@ export default async function handler(req, res) {
     try {
       const receivedData = req.body;
       const update = receivedData.status;
-      sendUpdate(update); // Send update to frontend
 
       // Log the progress update
       console.log('Progress update from local server:', update);
+
+      sendUpdate(update); // Send update to frontend
 
       // Respond immediately to acknowledge the update
       res.send({ message: 'Progress update received successfully' });
@@ -48,6 +41,18 @@ export default async function handler(req, res) {
       console.error('Error processing request:', err);
       res.status(500).send({ error: 'Failed to process request', details: err.message });
     }
+  }  else if (req.method === 'GET') {
+    // For progress updates to frontend:
+    res.setHeader("Content-Type", "text/event-stream");
+    res.setHeader("Cache-Control", "no-cache");
+    res.setHeader("Connection", "keep-alive");
+
+    clients.push(res); // Store client connection
+    
+    req.on("close", () => {
+      clients = clients.filter(client => client !== res); // Remove disconnected client
+    });
+
   } else if (req.method === 'OPTIONS') {
     /// Handle the preflight request
     const origin = req.headers.origin;
