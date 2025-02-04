@@ -54,6 +54,8 @@ export default async function handler(req, res) {
   } else if (req.method === 'OPTIONS') {
     // Handle the preflight request
     const origin = req.headers.origin;
+    console.log("Received a preflight OPTIONS request from:", origin);
+
     if (allowedOrigins.includes(origin)) {
       res.setHeader("Access-Control-Allow-Origin", origin);
       console.log("Allowed origin:", origin);
