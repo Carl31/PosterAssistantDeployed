@@ -22,6 +22,7 @@ const DisplayPage = () => {
 
                 if (response.status === 200) {
                     setJsonData(response.data.json); // JSON is ready, store it
+                    console.log("JSON data:", response.data.json);
                     setLoading(false); // Stop showing loading screen
                 } else {
                     // JSON is not ready yet, keep polling
