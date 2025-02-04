@@ -11,22 +11,35 @@ const DisplayPage = () => {
     const { objectId } = useParams(); // Get objectId from URL
     const [jsonData, setJsonData] = useState(null);
     const [loading, setLoading] = useState(true);
-    
+
     useEffect(() => {
         const fetchData = async () => {
+            let retryCount = 0; // Initialize retry counter
+
             try {
                 const response = await axios.get(`${apiUrl}/notify`);
-                
+
                 if (response.status === 200) {
                     setJsonData(response.data.json); // JSON is ready, store it
                     setLoading(false); // Stop showing loading screen
                 } else {
                     // JSON is not ready yet, keep polling
-                    setTimeout(fetchData, 3000); // Poll every 3 seconds
+                    if (retryCount < 5) {
+                        setTimeout(fetchData, 3000); // Poll every 3 seconds
+                    }
+                    retryCount++; // Increment retry counter
                 }
             } catch (error) {
                 console.error("Error fetching JSON:", error);
-                setTimeout(fetchData, 5000); // Retry in 5 seconds on failure
+                retryCount++; // Increment retry counter
+
+                if (retryCount < 5) {
+                    setTimeout(fetchData, 5000); // Retry in 5 seconds on failure
+                } else {
+                    console.error("Max retries exceeded. Giving up.");
+                    setLoading(false); // Stop showing loading screen
+                    // You can also display an error message to the user here
+                }
             }
         };
 
