@@ -58,7 +58,7 @@ export default async function handler(req, res) {
 
     if (allowedOrigins.includes(origin)) {
       res.setHeader("Access-Control-Allow-Origin", origin);
-      console.log("Allowed origin:", origin);
+      //testing: console.log("Allowed origin:", origin);
     } // Allow all origins or specify specific origins
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow specific headers
