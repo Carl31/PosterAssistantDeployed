@@ -21,7 +21,7 @@ const DisplayPage = () => {
                 const response = await axios.get(`${apiUrl}/notify`);
 
                 if (response.status === 200) {
-                    setJsonData(JSON.stringify(response.data.json, null, 2)); // JSON is ready, store it
+                    setJsonData(JSON.stringify(response.data, null, 2)); // JSON is ready, store it
                     console.log('JsonData set:', jsonData);
                     setLoading(false); // Stop showing loading screen
                 } else {
