@@ -41,7 +41,7 @@ export default async function handler(req, res) {
       console.error('Error processing request:', err);
       res.status(500).send({ error: 'Failed to process request', details: err.message });
     }
-  }  else if (req.method === 'GET') {
+  } else if (req.method === 'GET') {
     // Handle the preflight request
     const origin = req.headers.origin;
     if (allowedOrigins.includes(origin)) {
@@ -57,10 +57,15 @@ export default async function handler(req, res) {
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Connection", "keep-alive");
 
+    // Immediately send a "connected" message
+    res.write("event: connected\ndata: Connected to SSE\n\n");
+
     clients.push(res); // Store client connection
 
+    // Remove disconnected clients
     req.on("close", () => {
-      clients = clients.filter(client => client !== res); // Remove disconnected client
+      clients = clients.filter(client => client !== res);
+      console.log("Client disconnected from SSE");
     });
 
   } else if (req.method === 'OPTIONS') {

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom'; // Import useParams for accessing route parameters
 import LoadingPage from '../pages/LoadingPage';
 import OutputPage from '../pages/OutputPage';
+import Layout from './Layout';
 
 const apiUrl = process.env.REACT_APP_API_URL
 
@@ -51,7 +52,14 @@ const DisplayPage = () => {
     }
 
     // return <OutputPage posterLinks={jsonData} />;
-    return <pre>{JSON.stringify(jsonData, null, 2)}</pre>; // Render the JSON data as raw text
+    return (
+        <Layout>
+
+            <div className=" pt-4 flex justify-center items-center">
+                <p>{JSON.stringify(jsonData, null, 2)}</p>
+            </div>
+        </Layout>
+    );
 };
 
 // const DisplayPage = () => {

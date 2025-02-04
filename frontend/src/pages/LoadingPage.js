@@ -16,6 +16,11 @@ const LoadingPage = () => {
         eventSource.onmessage = (event) => {
             const data = JSON.parse(event.data);
             setStatus(data.status);
+
+            if (data.includes("App completed")) {
+                eventSource.close(); // Stop listening when done
+                // Show the output page
+            }
         };
 
         eventSource.onerror = () => {
