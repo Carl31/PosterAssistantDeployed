@@ -15,6 +15,7 @@ const LoadingPage = () => {
 
         eventSource.onmessage = (event) => {
             const data = JSON.parse(event.data);
+            console.log("Progress update:", data);
             setStatus(data.status);
 
             if (data.includes("App completed")) {

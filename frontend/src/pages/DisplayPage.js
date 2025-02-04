@@ -21,7 +21,8 @@ const DisplayPage = () => {
                 const response = await axios.get(`${apiUrl}/notify`);
 
                 if (response.status === 200) {
-                    setJsonData(response.data.json); // JSON is ready, store it
+                    setJsonData(JSON.stringify(response.data.json, null, 2)); // JSON is ready, store it
+                    console.log('JsonData set:', jsonData);
                     setLoading(false); // Stop showing loading screen
                 } else {
                     // JSON is not ready yet, keep polling
@@ -57,7 +58,7 @@ const DisplayPage = () => {
         <Layout>
 
             <div className=" pt-4 flex justify-center items-center">
-                <p>{JSON.stringify(jsonData, null, 2)}</p>
+                <p>{jsonData}</p>
             </div>
         </Layout>
     );
