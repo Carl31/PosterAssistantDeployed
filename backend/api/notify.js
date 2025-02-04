@@ -62,7 +62,7 @@ export default async function handler(req, res) {
     if (latestJson) {
       res.status(200).json(latestJson);
     } else {
-      res.status(202).json({ message: 'No data available' });
+      res.status(404).json({ message: 'No data available' });
     }
 
   } else if (req.method === 'OPTIONS') {
