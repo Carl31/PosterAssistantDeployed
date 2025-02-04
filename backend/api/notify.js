@@ -27,13 +27,21 @@ export default async function handler(req, res) {
 
       console.log('Received response from local server:', objectId);
 
-      // Connect to DB
-      await connectDB();
+      // TESTING START
+      if (false) { // need to uncomment this line for production
+        // Connect to DB
+        await connectDB();
 
-      // Upload JSON to MongoDB
-      const output = await readJsonFile(objectId);
+        // Upload JSON to MongoDB
+        const output = await readJsonFile(objectId);
 
-      latestJson = output;
+        latestJson = output;
+      }
+
+      latestJson = objectId;
+
+
+      
 
       res.send({ message: 'Process initiated successfully' });
     } catch (err) {
