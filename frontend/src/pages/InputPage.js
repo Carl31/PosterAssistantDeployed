@@ -52,7 +52,7 @@ const InputPage = ({ onSubmit }) => {
 
             // Navigate to the DisplayPage with the objectId
             // navigate(`/display/${result.data.objectId}`); // simple dsiaplay of json
-            navigate(`/display`);
+            navigate(`/loading`);
         } catch (error) {
             setResponse('Error uploading the file.');
             console.error('Upload error:', error);
