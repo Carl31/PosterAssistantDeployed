@@ -40,8 +40,6 @@ const DisplayPage = () => {
                 setTimeout(fetchProgress, retryInterval);
             } else {
                 console.error("Max retries reached. Stopping polling.");
-                setProgressMessage("Processing took too long. Please try again later.");
-                setLoading(false); // Stop loading screen
             }
         };
 
