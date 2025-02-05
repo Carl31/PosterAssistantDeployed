@@ -7,6 +7,12 @@ const allowedOrigins = [
 let clients = [];
 let currentProgress = "";
 
+setInterval(() => {
+  clients.forEach(client => {
+      client.write(": keep-alive\n\n"); // SSE comment (ignored but keeps the connection alive)
+  });
+}, 15000); // Send every 15 seconds (Vercel might cut off at 30s)
+
 // Function to send updates to all clients
 const sendUpdate = (update) => {
   currentProgress = update; // Store latest status
