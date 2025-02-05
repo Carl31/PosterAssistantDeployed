@@ -5,6 +5,7 @@ const allowedOrigins = [
 ];
 
 let clients = [];
+let currentProgress = "";
 
 // Function to send updates to all clients
 const sendUpdate = (update) => {

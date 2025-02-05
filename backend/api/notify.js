@@ -65,6 +65,8 @@ export default async function handler(req, res) {
       res.status(404).json({ message: 'No data available' });
     }
 
+    latestJson = null;
+
   } else if (req.method === 'OPTIONS') {
     // Handle the preflight request
     const origin = req.headers.origin;
