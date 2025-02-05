@@ -11,33 +11,36 @@ const LoadingPage = () => {
 
     // for recieving real-time updates from backend
     useEffect(() => {
-        const eventSource = new EventSource(`${apiUrl}/progress`);
-
-        eventSource.onmessage = (event) => {
-            try {
-                const data = JSON.parse(event.data);
-                console.log("Progress update:", data);
-                setStatus(data.status);
-
-                // If the backend signals completion, close the event stream
-                if (data.status === "App completed") {
-                    eventSource.close();
-                    
-                    // Navigate to the display page after a short delay
-                    setTimeout(() => {
-                        navigate("/display"); 
-                    }, 2000);
+        const connectEventSource = () => {
+            const eventSource = new EventSource(`${apiUrl}/progress`);
+    
+            eventSource.onmessage = (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+                    console.log("Progress update:", data);
+                    setStatus(data.status);
+    
+                    if (data.status === "App completed") {
+                        eventSource.close();
+                        setTimeout(() => navigate("/display"), 2000);
+                    }
+                } catch (error) {
+                    console.error("Error parsing progress update:", error);
                 }
-            } catch (error) {
-                console.error("Error parsing progress update:", error);
-            }
+            };
+    
+            eventSource.onerror = () => {
+                console.error("SSE connection lost. Attempting to reconnect...");
+                eventSource.close();
+    
+                // 🔥 Attempt to reconnect after 3 seconds
+                setTimeout(connectEventSource, 3000);
+            };
+    
+            return eventSource;
         };
-
-        eventSource.onerror = (error) => {
-            console.error("Error with progress updates:", error);
-            eventSource.close(); // Close the connection if an error occurs
-        };
-
+    
+        const eventSource = connectEventSource();
         return () => eventSource.close(); // Cleanup on unmount
     }, [navigate]);
 

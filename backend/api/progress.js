@@ -68,6 +68,8 @@ export default async function handler(req, res) {
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Connection", "keep-alive");
 
+    res.flushHeaders();
+
     // Immediately send a "connected" message
     res.write("event: connected\ndata: Connected to SSE\n\n");
 
