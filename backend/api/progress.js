@@ -12,7 +12,7 @@ const sendUpdate = (update) => {
   currentProgress = update; // Store latest status
 
     clients.forEach(client => {
-        client.write(`data: ${JSON.stringify({ update })}\n\n`);
+        client.write(`data: ${JSON.stringify({ currentProgress })}\n\n`);
     });
 
     if (update === "App completed") {
