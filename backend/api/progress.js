@@ -8,9 +8,19 @@ let clients = [];
 
 // Function to send updates to all clients
 const sendUpdate = (update) => {
-  clients.forEach(client => {
-    client.write(`data: ${JSON.stringify({ status: update })}\n\n`);
-  });
+  currentProgress = update; // Store latest status
+
+    clients.forEach(client => {
+        client.write(`data: ${JSON.stringify({ update })}\n\n`);
+    });
+
+    if (update === "App completed") {
+        // Close all client connections after a short delay
+        setTimeout(() => {
+            clients.forEach(client => client.end());
+            clients = [];
+        }, 2000);
+    }
 };
 
 export default async function handler(req, res) {

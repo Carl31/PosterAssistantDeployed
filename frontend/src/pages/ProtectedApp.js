@@ -50,7 +50,7 @@ const ProtectedApp = () => {
           element={<InputPage onSubmit={handleSubmit} />}
         />
         <Route
-          path="/display/:objectId"
+          path="/display"
           element={<DisplayPage />}
         />
         <Route

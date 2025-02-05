@@ -9,49 +9,49 @@ import Layout from './Layout';
 const apiUrl = process.env.REACT_APP_API_URL
 
 const DisplayPage = () => {
-    const { objectId } = useParams(); // Get objectId from URL
+    // const { objectId } = useParams(); // Get objectId from URL - OLD simple version
+    // const [loading, setLoading] = useState(true); // previous version used loading
     const [jsonData, setJsonData] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const maxRetries = 40; // 40 attempts (2 minutes total)
+    const retryInterval = 3000; // 3 seconds interval
+    
 
     useEffect(() => {
-        let retryCount = 0; // Initialize retry counter
+        let retryCount = 0;
 
-        const fetchData = async () => {
+        const fetchProgress = async () => {
             try {
                 const response = await axios.get(`${apiUrl}/notify`);
 
-                if (response.status === 200) {
-                    setJsonData(JSON.stringify(response.data, null, 2)); // JSON is ready, store it
-                    console.log('JsonData set:', jsonData);
-                    setLoading(false); // Stop showing loading screen
+                if (response.status === 200 && response.data) {
+                    const data = response.data;
+                    setJsonData(data);
+
                 } else {
-                    // JSON is not ready yet, keep polling
-                    if (retryCount < 5) {
-                        retryCount++; // Increment retry counter
-                        setTimeout(fetchData, 3000); // Poll every 3 seconds
-                    } else {
-                        console.error("Max retries exceeded. Giving up.");
-                        setLoading(false); // Stop showing loading screen
-                    }
+                    console.warn("No data received. Retrying...");
                 }
             } catch (error) {
-                console.error("Error fetching JSON:", error);
-                if (retryCount < 5) {
-                    retryCount++; // Increment retry counter
-                    setTimeout(fetchData, 5000); // Retry in 5 seconds on failure
-                } else {
-                    console.error("Max retries exceeded. Giving up.");
-                    setLoading(false); // Stop showing loading screen
-                }
+                console.error("Error fetching progress:", error);
+            }
+
+            // Continue polling if retry limit isn't reached
+            if (retryCount < maxRetries) {
+                retryCount++;
+                setTimeout(fetchProgress, retryInterval);
+            } else {
+                console.error("Max retries reached. Stopping polling.");
+                setProgressMessage("Processing took too long. Please try again later.");
+                setLoading(false); // Stop loading screen
             }
         };
 
-        fetchData(); // Start polling immediately when page loads
-    }, [objectId]); // Include objectId in the dependency array so that it reruns with every change to objectID (i.e. after every new time the user submits json)
+        fetchProgress(); // Initial call
 
-    if (loading) {
-        return <LoadingPage />;
-    }
+    }, []);
+
+    // if (loading) {
+    //     return <LoadingPage />;
+    // }
 
     // return <OutputPage posterLinks={jsonData} />;
     return (

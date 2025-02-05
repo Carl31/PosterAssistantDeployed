@@ -14,23 +14,32 @@ const LoadingPage = () => {
         const eventSource = new EventSource(`${apiUrl}/progress`);
 
         eventSource.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            console.log("Progress update:", data);
-            setStatus(data.status);
+            try {
+                const data = JSON.parse(event.data);
+                console.log("Progress update:", data);
+                setStatus(data.status);
 
-            if (data.includes("App completed")) {
-                eventSource.close(); // Stop listening when done
-                // Show the output page
+                // If the backend signals completion, close the event stream
+                if (data.status === "App completed") {
+                    eventSource.close();
+                    
+                    // Navigate to the display page after a short delay
+                    setTimeout(() => {
+                        navigate("/display"); 
+                    }, 2000);
+                }
+            } catch (error) {
+                console.error("Error parsing progress update:", error);
             }
         };
 
-        eventSource.onerror = () => {
-            console.error("Error connecting to progress updates");
-            eventSource.close();
+        eventSource.onerror = (error) => {
+            console.error("Error with progress updates:", error);
+            eventSource.close(); // Close the connection if an error occurs
         };
 
         return () => eventSource.close(); // Cleanup on unmount
-    }, []);
+    }, [navigate]);
 
     return (
 
