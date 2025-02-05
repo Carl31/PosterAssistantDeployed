@@ -12,7 +12,7 @@ const DisplayPage = () => {
     // const { objectId } = useParams(); // Get objectId from URL - OLD simple version
     // const [loading, setLoading] = useState(true); // previous version used loading
     const [jsonData, setJsonData] = useState(null);
-    const maxRetries = 40; // 40 attempts (2 minutes total)
+    const maxRetries = 2; // 40 attempts (2 minutes total)
     const retryInterval = 3000; // 3 seconds interval
     
 
