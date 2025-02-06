@@ -47,13 +47,9 @@ export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow specific headers
     res.setHeader('Access-Control-Allow-Credentials', 'true');
 
-    if (lastIndex < progressUpdates.length) {
-      // Get all new messages since last poll
-      const newMessages = progressUpdates.slice(lastIndex);
-      lastIndex = progressUpdates.length; // Update last index
-    }
+    const newMessages = progressUpdates.slice(lastIndex);
 
-    res.json({ messages: progressUpdates, timestamp: lastUpdated });
+    res.json({ messages: newMessages, timestamp: lastUpdated });
 
 
   } else if (req.method === 'OPTIONS') {
