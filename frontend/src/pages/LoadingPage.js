@@ -50,7 +50,7 @@ const LoadingPage = () => {
           const displayMessages = async () => {
             for (const message of queue) {
               setStatus(message); // Update UI with the current message
-              await new Promise((resolve) => setTimeout(resolve, 2000)); // Show each message for 1 sec
+              await new Promise((resolve) => setTimeout(resolve, 3000)); // Show each message for 1 sec
               if (message.localeCompare("App completed") == 0) {
                 navigate(`/display`);
               }
