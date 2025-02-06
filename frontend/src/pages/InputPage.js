@@ -6,6 +6,7 @@ import axios from 'axios';
 const apiUrl = process.env.REACT_APP_API_URL
 
 const InputPage = ({ onSubmit }) => {
+    const [error, setError] = useState('');
     const [jsonData, setJsonData] = useState('');
     const [response, setResponse] = useState('');
     const navigate = useNavigate(); // Replace history with useNavigate
@@ -59,6 +60,20 @@ const InputPage = ({ onSubmit }) => {
         }
     };
 
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+        setUserImageLink(value);
+    
+        // Regular expression for Google Drive links
+        const googleDriveRegex = /^(https?:\/\/)?(www\.)?(drive\.google\.com\/(file\/d\/|open\?id=|uc\?)|docs\.google\.com\/[^/]+\/d\/)/;
+    
+        if (!googleDriveRegex.test(value)) {
+            setError("Invalid Google Drive link"); // Show an error message
+        } else {
+            setError(""); // Clear error if valid
+        }
+    };
+
     return (
         <Layout>
             <h1 className="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left">
@@ -81,9 +96,10 @@ const InputPage = ({ onSubmit }) => {
                         type="text"
                         placeholder="Your Image Link"
                         value={userImageLink}
-                        onChange={(e) => setUserImageLink(e.target.value)}
+                        onChange={handleInputChange}
                         required
                     />
+                     {error && <p className="text-red-500">{error}</p>}
                     <input
                         className="mb-4 shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
                         type="text"
