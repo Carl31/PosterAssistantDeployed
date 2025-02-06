@@ -51,6 +51,8 @@ export default async function handler(req, res) {
 
     res.json({ messages: newMessages, timestamp: lastUpdated });
 
+    lastIndex = progressUpdates.length;
+
 
   } else if (req.method === 'OPTIONS') {
     /// Handle the preflight request
