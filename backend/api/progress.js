@@ -4,31 +4,8 @@ const allowedOrigins = [
   process.env.FRONTEND_URL2
 ];
 
-let clients = [];
-let currentProgress = "";
-
-setInterval(() => {
-  clients.forEach(client => {
-      client.write(": keep-alive\n\n"); // SSE comment (ignored but keeps the connection alive)
-  });
-}, 15000); // Send every 15 seconds (Vercel might cut off at 30s)
-
-// Function to send updates to all clients
-const sendUpdate = (update) => {
-  currentProgress = update; // Store latest status
-
-    clients.forEach(client => {
-        client.write(`data: ${JSON.stringify({ currentProgress })}\n\n`);
-    });
-
-    if (update === "App completed") {
-        // Close all client connections after a short delay
-        setTimeout(() => {
-            clients.forEach(client => client.end());
-            clients = [];
-        }, 2000);
-    }
-};
+let progressUpdates = []; // Stores all progress updates
+let lastIndex = 0; // Keeps track of the last sent index for polling
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
@@ -49,8 +26,7 @@ export default async function handler(req, res) {
 
       // Log the progress update
       console.log('Progress update from local server:', update);
-
-      sendUpdate(update); // Send update to frontend
+      progressUpdates.push(update);
 
       // Respond immediately to acknowledge the update
       res.send({ message: 'Progress update received successfully' });
@@ -69,23 +45,16 @@ export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow specific headers
     res.setHeader('Access-Control-Allow-Credentials', 'true');
 
-    // For progress updates to frontend:
-    res.setHeader("Content-Type", "text/event-stream");
-    res.setHeader("Cache-Control", "no-cache");
-    res.setHeader("Connection", "keep-alive");
+    if (lastIndex < progressUpdates.length) {
+      // Get all new messages since last poll
+      const newMessages = progressUpdates.slice(lastIndex);
+      lastIndex = progressUpdates.length; // Update last index
 
-    res.flushHeaders();
+      res.json({ messages: newMessages });
+    } else {
+      res.json({ messages: [] }); // No new messages
+    }
 
-    // Immediately send a "connected" message
-    res.write("event: connected\ndata: Connected to SSE\n\n");
-
-    clients.push(res); // Store client connection
-
-    // Remove disconnected clients
-    req.on("close", () => {
-      clients = clients.filter(client => client !== res);
-      console.log("Client disconnected from SSE");
-    });
 
   } else if (req.method === 'OPTIONS') {
     /// Handle the preflight request

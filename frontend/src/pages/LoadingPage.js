@@ -2,48 +2,70 @@ import Loader from "../components/Loader";
 import { useNavigate } from 'react-router-dom';
 import Layout from './Layout';
 import { React, useEffect, useState } from "react";
+import axios from 'axios';
 
 const apiUrl = process.env.REACT_APP_API_URL
 
 const LoadingPage = () => {
     const navigate = useNavigate();
     const [status, setStatus] = useState("Waiting for updates...");
+    const [queue, setQueue] = useState([]); // Stores messages to display
+    const [isDisplaying, setIsDisplaying] = useState(false); // Controls animation
 
-    // for recieving real-time updates from backend
     useEffect(() => {
-        const connectEventSource = () => {
-            const eventSource = new EventSource(`${apiUrl}/progress`);
-    
-            eventSource.onmessage = (event) => {
-                try {
-                    const data = JSON.parse(event.data);
-                    console.log("Progress update:", data);
-                    setStatus(data.status);
-    
-                    if (data.status === "App completed") {
-                        eventSource.close();
-                        setTimeout(() => navigate("/display"), 2000);
-                    }
-                } catch (error) {
-                    console.error("Error parsing progress update:", error);
-                }
-            };
-    
-            eventSource.onerror = () => {
-                console.error("SSE connection lost. Attempting to reconnect...");
-                eventSource.close();
-    
-                // 🔥 Attempt to reconnect after 3 seconds
-                setTimeout(connectEventSource, 3000);
-            };
-    
-            return eventSource;
-        };
-    
-        const eventSource = connectEventSource();
-        return () => eventSource.close(); // Cleanup on unmount
-    }, [navigate]);
+        let isMounted = true;
 
+        const fetchProgress = async () => {
+            try {
+                const response = await axios.get(`${apiUrl}/progress`);
+                const newMessages = response.data.messages;
+
+                if (!isMounted) return; // Prevent state update if unmounted
+
+                if (newMessages.length > 0) {
+                    setQueue(prevQueue => [...prevQueue, ...newMessages]);
+                }
+            } catch (error) {
+                console.error("Error fetching progress:", error);
+            } finally {
+                setTimeout(fetchProgress, 10000); // Poll every 10 seconds
+            }
+        };
+
+        fetchProgress();
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
+
+    // Display each update for 1 second if there are multiple new messages
+    useEffect(() => {
+        if (queue.length > 0 && !isDisplaying) {
+            setIsDisplaying(true);
+            let i = 0;
+
+            const interval = setInterval(() => {
+                setStatus(queue[i]);
+
+                if (queue[i] === "App completed") {
+                    clearInterval(interval);
+                    setQueue([]);
+                    setTimeout(() => navigate("/results"), 2000); // Redirect in 2 sec
+                    return;
+                }
+
+                i++;
+                if (i >= queue.length) {
+                    clearInterval(interval);
+                    setQueue([]); // Empty queue after displaying all messages
+                    setIsDisplaying(false);
+                }
+            }, 1000);
+
+            return () => clearInterval(interval);
+        }
+    }, [queue, isDisplaying, navigate]);
     return (
 
         <Layout>
