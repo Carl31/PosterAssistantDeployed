@@ -23,7 +23,7 @@ const LoadingPage = () => {
             if (timestamp > lastMessageTimestamp) {
               lastMessageTimestamp = timestamp; // Update last seen timestamp
               if (messages.length > 0) {
-                setQueue((prevQueue) => [...prevQueue, ...messages]); // Add new messages
+                setQueue(messages); // Add new messages
               }
             }
       
