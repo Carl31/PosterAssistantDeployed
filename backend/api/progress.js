@@ -5,7 +5,7 @@ const allowedOrigins = [
 ];
 
 let progressUpdates = []; // Stores all progress updates
-let lastIndex = 0; // Keeps track of the last sent index for polling
+let lastUpdated = Date.now();
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
@@ -27,6 +27,7 @@ export default async function handler(req, res) {
       // Log the progress update
       console.log('Progress update from local server:', update);
       progressUpdates.push(update);
+      lastUpdated = Date.now();
 
       // Respond immediately to acknowledge the update
       res.send({ message: 'Progress update received successfully' });
@@ -45,15 +46,7 @@ export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow specific headers
     res.setHeader('Access-Control-Allow-Credentials', 'true');
 
-    if (lastIndex < progressUpdates.length) {
-      // Get all new messages since last poll
-      const newMessages = progressUpdates.slice(lastIndex);
-      lastIndex = progressUpdates.length; // Update last index
-
-      res.json({ messages: newMessages });
-    } else {
-      res.json({ messages: [] }); // No new messages
-    }
+    res.json({ messages: progressUpdates, timestamp: lastUpdated });
 
 
   } else if (req.method === 'OPTIONS') {

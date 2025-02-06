@@ -13,59 +13,53 @@ const LoadingPage = () => {
     const [isDisplaying, setIsDisplaying] = useState(false); // Controls animation
 
     useEffect(() => {
-        let isMounted = true;
-
+        let lastMessageTimestamp = 0; // Tracks last update time
+      
         const fetchProgress = async () => {
-            try {
-                const response = await axios.get(`${apiUrl}/progress`);
-                const newMessages = response.data.messages;
-
-                if (!isMounted) return; // Prevent state update if unmounted
-
-                if (newMessages.length > 0) {
-                    setQueue(prevQueue => [...prevQueue, ...newMessages]);
-                }
-            } catch (error) {
-                console.error("Error fetching progress:", error);
-            } finally {
-                setTimeout(fetchProgress, 10000); // Poll every 10 seconds
+          try {
+            const response = await axios.get(`${apiUrl}/progress`);
+            const { messages, timestamp } = response.data; // Backend should return { messages: [...], timestamp: X }
+      
+            if (timestamp > lastMessageTimestamp) {
+              lastMessageTimestamp = timestamp; // Update last seen timestamp
+              if (messages.length > 0) {
+                setQueue((prevQueue) => [...prevQueue, ...messages]); // Add new messages
+              }
             }
+      
+            // Stop polling if "App completed" is in messages
+            if (messages.includes("App completed")) {
+              clearInterval(progressInterval);
+              return;
+            }
+      
+          } catch (error) {
+            console.error("Error fetching progress updates:", error);
+          }
         };
+      
+        const progressInterval = setInterval(fetchProgress, 10000); // Poll every 10 sec
+      
+        return () => clearInterval(progressInterval); // Cleanup
+      }, []);
 
-        fetchProgress();
-
-        return () => {
-            isMounted = false;
-        };
-    }, []);
-
-    // Display each update for 1 second if there are multiple new messages
-    useEffect(() => {
-        if (queue.length > 0 && !isDisplaying) {
-            setIsDisplaying(true);
-            let i = 0;
-
-            const interval = setInterval(() => {
-                setStatus(queue[i]);
-
-                if (queue[i] === "App completed") {
-                    clearInterval(interval);
-                    setQueue([]);
-                    setTimeout(() => navigate("/results"), 2000); // Redirect in 2 sec
-                    return;
-                }
-
-                i++;
-                if (i >= queue.length) {
-                    clearInterval(interval);
-                    setQueue([]); // Empty queue after displaying all messages
-                    setIsDisplaying(false);
-                }
-            }, 1000);
-
-            return () => clearInterval(interval);
+      useEffect(() => {
+        if (!isDisplaying && queue.length > 0) {
+          setIsDisplaying(true);
+      
+          const displayMessages = async () => {
+            for (const message of queue) {
+              setStatus(message); // Update UI with the current message
+              await new Promise((resolve) => setTimeout(resolve, 1000)); // Show each message for 1 sec
+            }
+      
+            setQueue([]); // Clear queue after displaying messages
+            setIsDisplaying(false); // Allow next batch to process
+          };
+      
+          displayMessages();
         }
-    }, [queue, isDisplaying, navigate]);
+      }, [queue, isDisplaying]);
     return (
 
         <Layout>
