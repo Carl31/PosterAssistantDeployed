@@ -18,6 +18,11 @@ const InputPage = ({ onSubmit }) => {
     const handleSubmitForJson = async (e) => {
         e.preventDefault();
 
+        if (error) {
+            alert("Please enter a valid Google Drive link before submitting.");
+            return; // Stop form submission
+        }
+
         // get correct json data:
         const additionalPngsArray = additionalPngs.split(",").map((item) => item.trim()); // Convert to array
         const templateNameWithExtension = templateName.endsWith(".psd") ? templateName : `${templateName}.psd`;
@@ -50,6 +55,7 @@ const InputPage = ({ onSubmit }) => {
                 },
             });
             setResponse(`File uploaded successfully. Object ID: ${result.data.objectId}`);
+            console.log("Form submitted successfully!");
 
             // Navigate to the DisplayPage with the objectId
             // navigate(`/display/${result.data.objectId}`); // simple dsiaplay of json
@@ -99,7 +105,7 @@ const InputPage = ({ onSubmit }) => {
                         onChange={handleInputChange}
                         required
                     />
-                     {error && <p className="text-red-500">{error}</p>}
+                     {error && <p className="text-red-500 pb-4 pt-0">{error}</p>}
                     <input
                         className="mb-4 shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
                         type="text"
