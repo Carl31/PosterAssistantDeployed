@@ -12,7 +12,7 @@ const DisplayPage = () => {
     // const { objectId } = useParams(); // Get objectId from URL - OLD simple version
     // const [loading, setLoading] = useState(true); // previous version used loading
     const [jsonData, setJsonData] = useState(null);
-    const maxRetries = 2; // 40 attempts (2 minutes total)
+    const maxRetries = 40; // 40 attempts (2 minutes total)
     const retryInterval = 3000; // 3 seconds interval
     
 
@@ -51,15 +51,15 @@ const DisplayPage = () => {
     //     return <LoadingPage />;
     // }
 
-    // return <OutputPage posterLinks={jsonData} />;
-    return (
-        <Layout>
+    return <OutputPage posterLinks={jsonData} />;
+    // return (
+    //     <Layout>
 
-            <div className=" pt-4 flex justify-center items-center">
-                <p>{jsonData}</p>
-            </div>
-        </Layout>
-    );
+    //         <div className=" pt-4 flex justify-center items-center">
+    //             <p>{jsonData}</p>
+    //         </div>
+    //     </Layout>
+    // );
 };
 
 // const DisplayPage = () => {
