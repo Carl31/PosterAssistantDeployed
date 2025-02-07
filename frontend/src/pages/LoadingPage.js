@@ -28,10 +28,10 @@ const LoadingPage = () => {
             }
       
             // Stop polling if "App completed" is in messages
-            if (messages.includes("App completed")) {
-              clearInterval(progressInterval);
-              return;
-            }
+            // if (messages.includes("App completed")) {
+            //   clearInterval(progressInterval);
+            //   return;
+            // }
       
           } catch (error) {
             console.error("Error fetching progress updates:", error);
