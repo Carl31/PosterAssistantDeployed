@@ -2,11 +2,14 @@ import React from "react";
 import { useNavigate } from 'react-router-dom';
 import Layout from './Layout';
 import { useEffect, useState } from "react";
+import { useLocation } from 'react-router-dom';
 
 
-const OutputPage = ({ posterLinks }) => {
+const OutputPage = () => {
     const navigate = useNavigate();
     const [links, setLinks] = useState([]);
+    const location = useLocation();
+    const posterLinks = location.state.posterLinks;
 
     useEffect(() => {
         if (posterLinks && posterLinks.output) {

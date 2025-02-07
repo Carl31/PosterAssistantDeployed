@@ -5,12 +5,14 @@ import { useParams } from 'react-router-dom'; // Import useParams for accessing 
 import LoadingPage from '../pages/LoadingPage';
 import OutputPage from '../pages/OutputPage';
 import Layout from './Layout';
+import { useNavigate } from 'react-router-dom';
 
 const apiUrl = process.env.REACT_APP_API_URL
 
 const DisplayPage = () => {
     // const { objectId } = useParams(); // Get objectId from URL - OLD simple version
     // const [loading, setLoading] = useState(true); // previous version used loading
+    const navigate = useNavigate();
     const [jsonData, setJsonData] = useState(null);
     const maxRetries = 2; // 40 attempts (2 minutes total)
     const retryInterval = 3000; // 3 seconds interval
@@ -26,7 +28,7 @@ const DisplayPage = () => {
                 if (response.status === 200 && response.data) {
                     const data = response.data;
                     setJsonData(data);
-
+                    navigate('/output', { state: { posterLinks: data } });
                 } else {
                     console.warn("No data received. Retrying...");
                 }
@@ -51,7 +53,7 @@ const DisplayPage = () => {
     //     return <LoadingPage />;
     // }
 
-    return <OutputPage posterLinks={jsonData} />;
+    // return <OutputPage posterLinks={jsonData} />;
     // return (
     //     <Layout>
 
