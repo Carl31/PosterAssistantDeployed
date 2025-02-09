@@ -10,6 +10,7 @@ const OutputPage = () => {
     const [links, setLinks] = useState([]);
     const location = useLocation();
     const posterLinks = location.posterLinks;
+    console.log("test:" + posterLinks);
 
     useEffect(() => {
         if (posterLinks && posterLinks.output) {
@@ -38,7 +39,7 @@ const OutputPage = () => {
             <div className="pt-4 flex flex-col items-center gap-4">
                 {/* First two buttons inside the same div */}
                 <div className="flex justify-center gap-2">
-                    {location.state}
+                    {location.posterLinks}
                 </div>
             </div>
 
