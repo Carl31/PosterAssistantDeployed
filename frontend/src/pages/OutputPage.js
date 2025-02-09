@@ -7,10 +7,12 @@ import { useLocation } from 'react-router-dom';
 
 const OutputPage = () => {
     const navigate = useNavigate();
-    const [links, setLinks] = useState([]);
     const location = useLocation();
-    const posterLinks = location.posterLinks;
-    console.log("test:" + posterLinks);
+    const [links, setLinks] = useState([]);
+
+    const posterLinks = location.state;
+
+    console.log("test:", posterLinks); // Should now log the correct JSON
 
     useEffect(() => {
         if (posterLinks && posterLinks.output) {
@@ -20,7 +22,7 @@ const OutputPage = () => {
                 posterLinks.output.darkMockup
             ]);
         }
-    }, [posterLinks]); // Re-run if posterLinks changes
+    }, [posterLinks]);
 
     return (
 
