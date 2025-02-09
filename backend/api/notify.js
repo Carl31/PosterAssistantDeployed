@@ -65,7 +65,7 @@ export default async function handler(req, res) {
     //   res.status(404).json({ message: 'No data available' });
     // }
 
-    res.status(200).json(latestJson);
+    res.status(200).send({ data: latestJson });
 
     latestJson = null;
 
