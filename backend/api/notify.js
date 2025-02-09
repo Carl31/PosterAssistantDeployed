@@ -59,11 +59,13 @@ export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow specific headers
     res.setHeader('Access-Control-Allow-Credentials', 'true');
 
-    if (latestJson) {
-      res.status(200).json(latestJson);
-    } else {
-      res.status(404).json({ message: 'No data available' });
-    }
+    // if (latestJson) {
+    //   res.status(200).json(latestJson);
+    // } else {
+    //   res.status(404).json({ message: 'No data available' });
+    // }
+
+    res.status(200).json(latestJson);
 
     latestJson = null;
 
