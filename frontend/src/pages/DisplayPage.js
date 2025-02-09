@@ -28,6 +28,7 @@ const DisplayPage = () => {
                 if (response.status === 200 && response.data) {
                     const data = response.data;
                     setJsonData(data);
+                    console.log("TESTING: Data received:", data);
                     navigate('/output', { state: { posterLinks: data } });
                 } else {
                     console.warn("No data received. Retrying...");
@@ -37,7 +38,7 @@ const DisplayPage = () => {
             }
 
             // Continue polling if retry limit isn't reached
-            if (retryCount < maxRetries) {
+            if ((retryCount < maxRetries) && jsonData !== null) {
                 retryCount++;
                 setTimeout(fetchProgress, retryInterval);
             } else {

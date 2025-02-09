@@ -35,6 +35,13 @@ const OutputPage = () => {
                 Thanks for your patience. Please view your poster below.
             </p>
 
+            <div className="pt-4 flex flex-col items-center gap-4">
+                {/* First two buttons inside the same div */}
+                <div className="flex justify-center gap-2">
+                    {locattion.state}
+                </div>
+            </div>
+
 
             <div className="pt-4 flex flex-col items-center gap-4">
                 {/* First two buttons inside the same div */}
