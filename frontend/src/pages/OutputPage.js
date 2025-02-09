@@ -43,7 +43,8 @@ const OutputPage = () => {
             <div className="pt-4 flex flex-col items-center gap-4">
                 {/* First two buttons inside the same div */}
                 <div className="flex justify-center gap-2">
-                    {location.posterLinks}
+                    {links},
+                    {posterLinks}
                 </div>
             </div>
 
