@@ -9,7 +9,7 @@ const OutputPage = () => {
     const navigate = useNavigate();
     const [links, setLinks] = useState([]);
     const location = useLocation();
-    const posterLinks = location.state.posterLinks;
+    const posterLinks = location.posterLinks;
 
     useEffect(() => {
         if (posterLinks && posterLinks.output) {
