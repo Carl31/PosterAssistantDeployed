@@ -10,20 +10,18 @@ const OutputPage = () => {
     const location = useLocation();
     const [links, setLinks] = useState([]);
 
-    console.log("Full location object:", location);
-    const storedData = localStorage.getItem("posterLinks");
-    const posterLinks = location.state || (storedData ? JSON.parse(storedData) : null);
-    console.log("posterLinks:", posterLinks);
-
-
-    console.log("test:", posterLinks); // Should now log the correct JSON
+    //console.log("Full location object:", location);
+    const storedData = localStorage.getItem("jsonData");
+    const jsonData = location.state || (storedData ? JSON.parse(storedData) : null);
+    console.log("jsonData:", jsonData);
+    const posterLinks = jsonData.output;
 
     useEffect(() => {
-        if (posterLinks && posterLinks.output) {
+        if (posterLinks) {
             setLinks([
-                posterLinks.output.poster,
-                posterLinks.output.lightMockup,
-                posterLinks.output.darkMockup
+                posterLinks.poster,
+                posterLinks.lightMockup,
+                posterLinks.darkMockup
             ]);
         }
     }, [posterLinks]);
