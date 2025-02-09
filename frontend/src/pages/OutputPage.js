@@ -10,7 +10,11 @@ const OutputPage = () => {
     const location = useLocation();
     const [links, setLinks] = useState([]);
 
-    const posterLinks = location.state;
+    console.log("Full location object:", location);
+    const storedData = localStorage.getItem("posterLinks");
+    const posterLinks = location.state || (storedData ? JSON.parse(storedData) : null);
+    console.log("posterLinks:", posterLinks);
+
 
     console.log("test:", posterLinks); // Should now log the correct JSON
 

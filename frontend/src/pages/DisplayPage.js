@@ -30,7 +30,8 @@ const DisplayPage = () => {
                     const data = response.data;
                     setJsonData(data);
                     console.log("TESTING: Data received:", data );
-                    navigate('/output', data);
+                    localStorage.setItem("posterLinks", JSON.stringify(data));
+                    navigate('/output', { state: data });
                     success = 1;
                 } else {
                     console.warn("No data received. Retrying...");
