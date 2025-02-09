@@ -21,9 +21,9 @@ const OutputPage = () => {
     useEffect(() => {
         if (posterLinks) {
             setLinks([
-                posterLinks.poster,
-                posterLinks.lightMockup,
-                posterLinks.darkMockup
+                posterLinks.ExportedPoster,
+                posterLinks.Poster_Assistant_MOCKUP,
+                posterLinks.Poster_Assistant_MOCKUP_dark
             ]);
         }
     }, [posterLinks]);
@@ -41,14 +41,6 @@ const OutputPage = () => {
             <p className="leading-normal text-base md:text-2xl mb-8 text-center md:text-left">
                 Thanks for your patience. Please view your poster below.
             </p>
-
-            <div className="pt-4 flex flex-col items-center gap-4">
-                {/* First two buttons inside the same div */}
-                <div className="flex justify-center gap-2">
-                    {links},
-                    {posterLinks}
-                </div>
-            </div>
 
 
             <div className="pt-4 flex flex-col items-center gap-4">
