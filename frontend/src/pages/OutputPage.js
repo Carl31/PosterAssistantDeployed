@@ -14,7 +14,7 @@ const OutputPage = () => {
     const storedData = localStorage.getItem("jsonData");
     const jsonData = location.state || (storedData ? JSON.parse(storedData) : null);
     console.log("jsonData:", jsonData);
-    const posterLinks = jsonData.output;
+    const posterLinks = jsonData.data.output;
 
     useEffect(() => {
         if (posterLinks) {
