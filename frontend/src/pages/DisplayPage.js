@@ -20,6 +20,7 @@ const DisplayPage = () => {
 
     useEffect(() => {
         let retryCount = 0;
+        let success = 0;
 
         const fetchProgress = async () => {
             try {
@@ -28,8 +29,9 @@ const DisplayPage = () => {
                 if (response.status === 200 && response.data) {
                     const data = response.data;
                     setJsonData(data);
-                    console.log("TESTING: Data received:", data);
-                    //navigate('/output', { state: { posterLinks: data } });
+                    console.log("TESTING: Data received:", data );
+                    navigate('/output', { state: { posterLinks: data } });
+                    success = 1;
                 } else {
                     console.warn("No data received. Retrying...");
                 }
@@ -38,10 +40,10 @@ const DisplayPage = () => {
             }
 
             // Continue polling if retry limit isn't reached
-            if ((retryCount < maxRetries) && jsonData !== null) {
+            if ((retryCount < maxRetries) && success === 0) {
                 retryCount++;
                 setTimeout(fetchProgress, retryInterval);
-            } else {
+            } else if (success === 0) {
                 console.error("Max retries reached. Stopping polling.");
             }
         };
