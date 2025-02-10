@@ -44,7 +44,7 @@ const InputPage = ({ onSubmit }) => {
         }
 
         // get correct json data:
-        const additionalPngsArray = additionalPngs.split(",").map((item) => item.trim()); // Convert to array
+        let additionalPngsArray = additionalPngs.split(",").map((item) => item.trim()); // Convert to array
         const templateNameWithExtension = templateName.endsWith(".psd") ? templateName : `${templateName}.psd`;
 
         const brandsValid = validateBrands(additionalPngsArray);
