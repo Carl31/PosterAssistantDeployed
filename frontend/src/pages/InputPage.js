@@ -17,6 +17,12 @@ const InputPage = ({ onSubmit }) => {
     const [additionalPngs, setAdditionalPngs] = useState(""); // New state for comma-separated values
 
     const validateBrands = (userBrands) => {
+
+        // if userBrands is empty, return true
+        if (userBrands.length === 0) {
+            return true;
+        }
+
         const validBrands = [
             'bbs', 'enkei', 'fia', 'greddy', 'hks', 'kandn',
             'ktuned', 'mugen', 'nismo', 'rocketbunny', 'rotiform',
