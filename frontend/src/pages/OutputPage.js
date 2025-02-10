@@ -15,9 +15,9 @@ const OutputPage = () => {
     const posterLinks = jsonData.data.output;
 
     // Testing:
-    // console.log("jsonData:", jsonData);
-    // console.log("jsonData.data:", jsonData.data);
-    // console.log("jsonData.data.output:", jsonData.data.output);
+    console.log("jsonData:", jsonData);
+    console.log("jsonData.data:", jsonData.data);
+    console.log("jsonData.data.output:", jsonData.data.output);
 
     useEffect(() => {
         if (posterLinks) {

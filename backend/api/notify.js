@@ -27,21 +27,19 @@ export default async function handler(req, res) {
 
       console.log('Received response from local server:', objectId);
 
-      // TESTING START
-      if (false) { // need to uncomment this line for production
+      // IF TESTING ORCHESTRATE FUNCTIONS ON LOCAL SERVER - change to false, as testing  function returns json, not object id, so will not be able to search it in db.
+      if (true) { // needs to be true for production
         // Connect to DB
         await connectDB();
 
         // Upload JSON to MongoDB
         const output = await readJsonFile(objectId);
-
         latestJson = output;
+
+      } else { // for testing only
+        latestJson = objectId;
       }
 
-      latestJson = objectId;
-
-
-      
 
       res.send({ message: 'Process initiated successfully' });
     } catch (err) {
@@ -59,13 +57,13 @@ export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow specific headers
     res.setHeader('Access-Control-Allow-Credentials', 'true');
 
-    // if (latestJson) {
-    //   res.status(200).json(latestJson);
-    // } else {
-    //   res.status(404).json({ message: 'No data available' });
-    // }
+    if (latestJson) {
+      res.status(200).send({ data: latestJson });
+    } else {
+      res.status(404).send({ data: 'No data available' });
+    }
 
-    res.status(200).send({ data: latestJson });
+    // res.status(200).send({ data: latestJson });
 
     latestJson = null;
 
