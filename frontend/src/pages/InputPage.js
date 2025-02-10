@@ -7,6 +7,7 @@ const apiUrl = process.env.REACT_APP_API_URL
 
 const InputPage = ({ onSubmit }) => {
     const [error, setError] = useState('');
+    const [brandError, setBrandError] = useState('');
     const [jsonData, setJsonData] = useState('');
     const [response, setResponse] = useState('');
     const navigate = useNavigate(); // Replace history with useNavigate
@@ -14,6 +15,25 @@ const InputPage = ({ onSubmit }) => {
     const [userImageLink, setUserImageLink] = useState(""); // New state
     const [templateName, setTemplateName] = useState(""); // New state
     const [additionalPngs, setAdditionalPngs] = useState(""); // New state for comma-separated values
+
+    const validateBrands = (userBrands) => {
+        const validBrands = [
+            'bbs', 'enkei', 'fia', 'greddy', 'hks', 'kandn',
+            'ktuned', 'mugen', 'nismo', 'rocketbunny', 'rotiform',
+            'spoon', 'tbc', 'trd', 'typer', 'volkracing', 'vtec',
+            'work', 'yokohama'
+        ];
+
+        const invalidBrands = userBrands.filter(brand => !validBrands.includes(brand));
+
+        if (invalidBrands.length > 0) {
+            setBrandError(`Invalid brands found: ${invalidBrands.join(", ")}`);
+            return false;
+        }
+
+        setBrandError('');
+        return true; // All brands are valid
+    };
 
     const handleSubmitForJson = async (e) => {
         e.preventDefault();
@@ -27,6 +47,14 @@ const InputPage = ({ onSubmit }) => {
         const additionalPngsArray = additionalPngs.split(",").map((item) => item.trim()); // Convert to array
         const templateNameWithExtension = templateName.endsWith(".psd") ? templateName : `${templateName}.psd`;
 
+        const brandsValid = validateBrands(additionalPngsArray);
+        if (brandsValid === false) {
+            alert("Please enter valid additional brands before submitting.");
+            return; // Stop form submission
+        }
+
+        // add .png to end of each brand
+        additionalPngsArray = additionalPngsArray.map(brand => brand.endsWith('.png') ? brand : brand + '.png');
         const jsonContent = onSubmit(userImageLink, templateNameWithExtension, additionalPngsArray); // Call the json format function
         // For testing: console.log("Generated JSON:", jsonContent);
 
@@ -64,15 +92,16 @@ const InputPage = ({ onSubmit }) => {
             setResponse('Error uploading the file.');
             console.error('Upload error:', error);
         }
+
     };
 
     const handleInputChange = (e) => {
         const value = e.target.value;
         setUserImageLink(value);
-    
+
         // Regular expression for Google Drive links
         const googleDriveRegex = /^(https?:\/\/)?(www\.)?(drive\.google\.com\/(file\/d\/|open\?id=|uc\?)|docs\.google\.com\/[^/]+\/d\/)/;
-    
+
         if (!googleDriveRegex.test(value)) {
             setError("Invalid Google Drive link"); // Show an error message
         } else {
@@ -105,15 +134,15 @@ const InputPage = ({ onSubmit }) => {
                         onChange={handleInputChange}
                         required
                     />
-                     {error && <p className="text-red-500 pb-4 pt-0">{error}</p>}
-                    <input
+                    {error && <p className="text-red-500 pb-4 pt-0">{error}</p>}
+                    <select
                         className="mb-4 shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
-                        type="text"
-                        placeholder="Template Name"
                         value={templateName}
                         onChange={(e) => setTemplateName(e.target.value)}
                         required
-                    />
+                    >
+                        <option value="Preset_C_1_2">Preset_C_1_2</option>
+                    </select>
                     <input
                         className="mb-4 shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
                         type="text"
@@ -121,6 +150,7 @@ const InputPage = ({ onSubmit }) => {
                         value={additionalPngs}
                         onChange={(e) => setAdditionalPngs(e.target.value)}
                     />
+                    {brandError && <p className="text-red-500 pb-4 pt-0">{brandError}</p>}
                 </div>
 
                 <div className="flex items-center justify-between pt-4">
