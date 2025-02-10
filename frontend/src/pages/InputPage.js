@@ -19,7 +19,7 @@ const InputPage = ({ onSubmit }) => {
     const validateBrands = (userBrands) => {
 
         // if userBrands is empty, return true
-        if (userBrands.length === 0) {
+        if (userBrands.length === 1) {
             return true;
         }
 
