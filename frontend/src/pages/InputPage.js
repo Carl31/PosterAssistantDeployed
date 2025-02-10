@@ -59,8 +59,11 @@ const InputPage = ({ onSubmit }) => {
             return; // Stop form submission
         }
 
-        // add .png to end of each brand
-        additionalPngsArray = additionalPngsArray.map(brand => brand.endsWith('.png') ? brand : brand + '.png');
+        // add .png to end of each brand if bigger than length 1 (i.e. no user input)
+        if (additionalPngsArray.length > 1) {
+            additionalPngsArray = additionalPngsArray.map(brand => brand.endsWith('.png') ? brand : brand + '.png');
+        }
+        
         const jsonContent = onSubmit(userImageLink, templateNameWithExtension, additionalPngsArray); // Call the json format function
         // For testing: console.log("Generated JSON:", jsonContent);
 
