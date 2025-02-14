@@ -65,7 +65,8 @@ const InputPage = ({ onSubmit }) => {
         }
         
         const jsonContent = onSubmit(userImageLink, templateNameWithExtension, additionalPngsArray); // Call the json format function
-        // For testing: console.log("Generated JSON:", jsonContent);
+        // For testing: 
+        console.log("Generated JSON:", jsonContent);
 
         // Serialize the JSON object to a string
         const jsonString = JSON.stringify(jsonContent, null, 2); // Pretty-print with indentation for readability
