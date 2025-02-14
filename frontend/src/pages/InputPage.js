@@ -49,9 +49,9 @@ const InputPage = ({ onSubmit }) => {
             return; // Stop form submission
         }
 
-        if(templateName === '') {
-            alert("Please enter a template name before submitting.");
-            return; // Stop form submission
+        if (!templateName || templateName === "") {
+            alert("Please select a template name!"); // Ensure user selects a value
+            return;
         }
 
         // get correct json data:
@@ -68,7 +68,7 @@ const InputPage = ({ onSubmit }) => {
         if (additionalPngsArray.length > 1) {
             additionalPngsArray = additionalPngsArray.map(brand => brand.endsWith('.png') ? brand : brand + '.png');
         }
-        
+
         const jsonContent = onSubmit(userImageLink, templateNameWithExtension, additionalPngsArray); // Call the json format function
         // For testing: 
         console.log("Generated JSON:", jsonContent);
@@ -153,9 +153,13 @@ const InputPage = ({ onSubmit }) => {
                     <select
                         className="mb-4 shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
                         value={templateName}
-                        onChange={(e) => setTemplateName(e.target.value)}
+                        onChange={(e) => {
+                            //console.log("Dropdown Changed:", e.target.value); // Debugging
+                            setTemplateName(e.target.value);
+                        }}
                         required
                     >
+                        <option value="">Select a template</option> {/* Placeholder option */}
                         <option value="Preset_C_1_2">Preset_C_1_2</option>
                     </select>
                     <input
