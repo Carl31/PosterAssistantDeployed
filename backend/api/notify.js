@@ -65,8 +65,6 @@ export default async function handler(req, res) {
 
     // res.status(200).send({ data: latestJson });
 
-    latestJson = null;
-
   } else if (req.method === 'OPTIONS') {
     // Handle the preflight request
     const origin = req.headers.origin;

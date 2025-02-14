@@ -37,7 +37,11 @@ const DisplayPage = () => {
                     console.warn("No data received. Retrying...");
                 }
             } catch (error) {
-                console.error("Error fetching progress:", error);
+                if (error.response && error.response.status === 404) {
+                    console.warn("404: No new data yet. Retrying...");
+                } else {
+                    console.error("Error fetching progress:", error);
+                }
             }
 
             // Continue polling if retry limit isn't reached
