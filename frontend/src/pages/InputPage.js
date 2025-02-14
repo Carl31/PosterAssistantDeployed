@@ -49,6 +49,11 @@ const InputPage = ({ onSubmit }) => {
             return; // Stop form submission
         }
 
+        if(templateName === '') {
+            alert("Please enter a template name before submitting.");
+            return; // Stop form submission
+        }
+
         // get correct json data:
         let additionalPngsArray = additionalPngs.split(",").map((item) => item.trim()); // Convert to array
         const templateNameWithExtension = templateName.endsWith(".psd") ? templateName : `${templateName}.psd`;
