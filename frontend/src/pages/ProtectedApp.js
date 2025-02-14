@@ -28,8 +28,8 @@ const ProtectedApp = () => {
         path: "D:/Documents/PosterAssistantLocal/PNGS/",
         makePng: "",
         modelPng: "",
-        add1: additionalPngs[0] || "", // Use first element of additionalPngs, or empty if undefined
-        add2: additionalPngs[1] || "", // Use second element of additionalPngs, or empty if undefined
+        add1: additionalPngs[1] || "", // Use first element of additionalPngs, or empty if undefined
+        add2: additionalPngs[2] || "", // Use second element of additionalPngs, or empty if undefined
       },
       userImageUrl: userImageLink, // Set user image link
     };
