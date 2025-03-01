@@ -161,6 +161,7 @@ const InputPage = ({ onSubmit }) => {
                     >
                         <option value="">Select a template</option> {/* Placeholder option */}
                         <option value="Preset_C_1_2">Preset_C_1_2</option>
+                        <option value="Preset_D_1_2">Preset_D_1_2</option>
                     </select>
                     <input
                         className="mb-4 shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
