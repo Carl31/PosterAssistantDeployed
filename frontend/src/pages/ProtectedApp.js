@@ -8,7 +8,7 @@ import OutputPage from './OutputPage'
 
 const ProtectedApp = () => {
 
-  const handleSubmit = (userImageLink, templateName, additionalPngs) => {
+  const handleSubmit = (userImageLink, userInstagram, templateName, additionalPngs) => {
     const jsonContent = {
       vehicle: {
         make: "",
@@ -26,6 +26,7 @@ const ProtectedApp = () => {
       },
       added: {
         path: "D:/Documents/PosterAssistantLocal/PNGS/",
+        instgram: userInstagram,
         makePng: "",
         modelPng: "",
         add1: additionalPngs[0] || "", // Use first element of additionalPngs, or empty if undefined

@@ -12,6 +12,7 @@ const InputPage = ({ onSubmit }) => {
     const [response, setResponse] = useState('');
     const navigate = useNavigate(); // Replace history with useNavigate
 
+    const [userInstagram, setUserInstargram] = useState(""); // New state
     const [userImageLink, setUserImageLink] = useState(""); // New state
     const [templateName, setTemplateName] = useState(""); // New state
     const [additionalPngs, setAdditionalPngs] = useState(""); // New state for comma-separated values
@@ -69,7 +70,7 @@ const InputPage = ({ onSubmit }) => {
             additionalPngsArray = additionalPngsArray.map(brand => brand.endsWith('.png') ? brand : brand + '.png');
         }
 
-        const jsonContent = onSubmit(userImageLink, templateNameWithExtension, additionalPngsArray); // Call the json format function
+        const jsonContent = onSubmit(userImageLink, userInstagram, templateNameWithExtension, additionalPngsArray); // Call the json format function
         // For testing: 
         console.log("Generated JSON:", jsonContent);
 
@@ -150,6 +151,13 @@ const InputPage = ({ onSubmit }) => {
                         required
                     />
                     {error && <p className="text-red-500 pb-4 pt-0">{error}</p>}
+                    <input
+                        className="mb-4 shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
+                        type="text"
+                        placeholder="Your instagram handle (optional)"
+                        value={userInstagram}
+                        onChange={(e) => setUserInstagram(e.target.value)}
+                    />
                     <select
                         className="mb-4 shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
                         value={templateName}
