@@ -71,7 +71,7 @@ const InputPage = ({ onSubmit }) => {
             additionalPngsArray = additionalPngsArray.map(brand => brand.endsWith('.png') ? brand : brand + '.png');
         }
 
-        const jsonContent = onSubmit(userImageLink, userInstagram, templateNameWithExtension, additionalPngsArray, pngColour); // Call the json format function
+        const jsonContent = onSubmit(userImageLink, "@"+userInstagram, templateNameWithExtension, additionalPngsArray, pngColour); // Call the json format function
         // For testing: 
         console.log("Generated JSON:", jsonContent);
 
