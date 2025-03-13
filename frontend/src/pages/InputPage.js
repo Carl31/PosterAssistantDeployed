@@ -8,7 +8,7 @@ const apiUrl = process.env.REACT_APP_API_URL
 const InputPage = ({ onSubmit }) => {
     const [error, setError] = useState('');
     const [brandError, setBrandError] = useState('');
-    const [jsonData, setJsonData] = useState('');
+    const [jsonData, setJsonData] = useState(''); // currently not used
     const [response, setResponse] = useState('');
     const navigate = useNavigate(); // Replace history with useNavigate
 
@@ -16,6 +16,7 @@ const InputPage = ({ onSubmit }) => {
     const [userImageLink, setUserImageLink] = useState(""); // New state
     const [templateName, setTemplateName] = useState(""); // New state
     const [additionalPngs, setAdditionalPngs] = useState(""); // New state for comma-separated values
+    const [pngColour, setPngColour] = useState(""); // Initially N for no.
 
     const validateBrands = (userBrands) => {
 
@@ -70,7 +71,7 @@ const InputPage = ({ onSubmit }) => {
             additionalPngsArray = additionalPngsArray.map(brand => brand.endsWith('.png') ? brand : brand + '.png');
         }
 
-        const jsonContent = onSubmit(userImageLink, userInstagram, templateNameWithExtension, additionalPngsArray); // Call the json format function
+        const jsonContent = onSubmit(userImageLink, userInstagram, templateNameWithExtension, additionalPngsArray, pngColour); // Call the json format function
         // For testing: 
         console.log("Generated JSON:", jsonContent);
 
@@ -170,6 +171,16 @@ const InputPage = ({ onSubmit }) => {
                         <option value="">Select a template</option> {/* Placeholder option */}
                         <option value="Preset_C_1_2">Preset_C_1_2</option>
                         <option value="Preset_D_1_2">Preset_D_1_2</option>
+                        <option value="Preset_clean_black">Preset_clean_black</option>
+                        <option value="Preset_clean_white">Preset_clean_white</option>
+                    </select>
+                    <select className="mb-4 shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
+                        onChange={(e) => setPngColour(e.target.value)}
+                        required
+                    >
+                        <option value="">Select PNG colour</option>
+                        <option value="white">White</option>
+                        <option value="black">Black</option>
                     </select>
                     <input
                         className="mb-4 shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
