@@ -26,7 +26,7 @@ const ProtectedApp = () => {
       },
       added: {
         path: "D:/Documents/PosterAssistantLocal/PNGS/",
-        instgram: userInstagram,
+        instagram: userInstagram,
         makePng: "",
         modelPng: "",
         pngColour: pngColour,
