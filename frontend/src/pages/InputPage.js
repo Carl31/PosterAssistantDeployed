@@ -12,7 +12,7 @@ const InputPage = ({ onSubmit }) => {
     const [response, setResponse] = useState('');
     const navigate = useNavigate(); // Replace history with useNavigate
 
-    const [userInstagram, setUserInstargram] = useState(""); // New state
+    const [userInstagram, setUserInstagram] = useState(""); // New state
     const [userImageLink, setUserImageLink] = useState(""); // New state
     const [templateName, setTemplateName] = useState(""); // New state
     const [additionalPngs, setAdditionalPngs] = useState(""); // New state for comma-separated values
