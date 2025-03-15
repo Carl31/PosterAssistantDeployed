@@ -8,6 +8,8 @@ const apiUrl = process.env.REACT_APP_API_URL
 const InputPage = ({ onSubmit }) => {
     const [error, setError] = useState('');
     const [brandError, setBrandError] = useState('');
+    // Following line is so that eslint doesn't complain about not using jsonData
+    // eslint-disable-next-line 
     const [jsonData, setJsonData] = useState(''); // currently not used
     const [response, setResponse] = useState('');
     const navigate = useNavigate(); // Replace history with useNavigate
