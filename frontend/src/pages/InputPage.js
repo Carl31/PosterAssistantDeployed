@@ -169,10 +169,10 @@ const InputPage = ({ onSubmit }) => {
                         required
                     >
                         <option value="">Select a template</option> {/* Placeholder option */}
-                        <option value="Preset_C_1_2">Preset_C_1_2</option>
-                        <option value="Preset_D_1_2">Preset_D_1_2</option>
                         <option value="Preset_clean_black">Preset_clean_black</option>
                         <option value="Preset_clean_white">Preset_clean_white</option>
+                        <option value="Preset_magazine_black">Preset_magazine_black</option>
+                        <option value="Preset_simple_white">Preset_simple_white</option>
                     </select>
                     <select className="mb-4 shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
                         onChange={(e) => setPngColour(e.target.value)}
